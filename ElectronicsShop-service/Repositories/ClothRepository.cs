@@ -20,7 +20,7 @@ public class ClothRepository : BaseRepository<Cloth>,IClothRepository
         // Check if Name is provided and exists in the database
         if (!string.IsNullOrEmpty(searchDto.Name))
         {
-            query = query.Where(c => c.Name == searchDto.Name);
+            query = query.Where(c => c.Name == searchDto.Name&&c.StoreName==searchDto.WhatToSee);
             if (query.Count()==0 )
             {
                 query = query.Where(c => false);
@@ -31,7 +31,7 @@ public class ClothRepository : BaseRepository<Cloth>,IClothRepository
         // Check if Color is provided and exists in the database
         if (!string.IsNullOrEmpty(searchDto.Color))
         {
-            query = query.Where(c => c.Color == searchDto.Color);
+            query = query.Where(c => c.Color == searchDto.Color && c.StoreName == searchDto.WhatToSee);
             if (query.Count() == 0)
             {
                 query = query.Where(c => false);
@@ -42,7 +42,7 @@ public class ClothRepository : BaseRepository<Cloth>,IClothRepository
         // Check if Make is provided and exists in the database
         if (!string.IsNullOrEmpty(searchDto.Make))
         {
-            query = query.Where(c => c.type == searchDto.Make);
+            query = query.Where(c => c.type == searchDto.Make && c.StoreName == searchDto.WhatToSee);
             if (query.Count() == 0)
             {
                 query = query.Where(c => false);
@@ -52,7 +52,7 @@ public class ClothRepository : BaseRepository<Cloth>,IClothRepository
         // Check if Size is provided and exists in the database
         if (searchDto.Size.HasValue)
         {
-            query = query.Where(c => c.Size == searchDto.Size);
+            query = query.Where(c => c.Size == searchDto.Size && c.StoreName == searchDto.WhatToSee);
             if (query.Count() == 0)
             {
                 query = query.Where(c => false);

@@ -17,6 +17,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Globalization;
 using System.Net.Security;
+using System.Security.Claims;
 
 namespace ElectronicsShop_service.Controllers;
 [ApiController]
@@ -40,8 +41,12 @@ public class BillController : MyBaseController<Bill, BillDto>
 
         var results = await _billRepository.GetAllAsync();
         var filteredBillData = results.Where(c => c.SellerName == whatToSeeValue);
+        if(!filteredBillData.Any())
+        {
+            return Ok("no bills for this shop");
+        }
 
-        foreach (var bill in results)
+        foreach (var bill in filteredBillData)
 		{
 			var thing = (await _clothRepository.Get(c => c.BillId == bill.Id)).ToList();
 			bill.Suits = thing;
@@ -49,7 +54,7 @@ public class BillController : MyBaseController<Bill, BillDto>
 
 
 		}
-		return Ok(results);
+		return Ok(filteredBillData);
 	}
 
 
@@ -86,11 +91,14 @@ public class BillController : MyBaseController<Bill, BillDto>
     }
 
 
-
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet()]
 	public  async Task<IActionResult> GetBillWithBuyerName([FromQuery]string searchedBuyertName)
+
 	{
-        var result= (await _billRepository.Get(b=>b.BuyerName==searchedBuyertName,null,"")).FirstOrDefault();
+
+        var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+        var result= (await _billRepository.Get(b=>b.BuyerName==searchedBuyertName&&b.SellerName==whatToSeeValue,null,"")).FirstOrDefault();
 
 		if (result == null)
 		{
@@ -189,9 +197,12 @@ public class BillController : MyBaseController<Bill, BillDto>
 		return s;
 	}
 
+    [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet]
     public async Task<IActionResult> GetStatics(PeriodType periodType)
     {
+        var whatToSeeClaim = User.FindFirst("WhatToSee")?.Value;
+
         var results = await _billRepository.GetAllAsync();
         var currentDate = DateTime.Now;
 
@@ -201,7 +212,7 @@ public class BillController : MyBaseController<Bill, BillDto>
             var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
             var monthlyStatistics = (await _clothRepository.Get(c =>
-                c.DateCreated >= firstDayOfMonth && c.DateCreated <= lastDayOfMonth && c.BillId != null,
+                c.DateCreated >= firstDayOfMonth && c.DateCreated <= lastDayOfMonth && c.BillId != null&&c.StoreName==whatToSeeClaim,
                 null,
                 ""))
                 .ToList();
@@ -234,7 +245,7 @@ public class BillController : MyBaseController<Bill, BillDto>
             var firstDayOfWeek = currentDate.AddDays(-6);
 
             var weeklyStatistics = (await _clothRepository.Get(c =>
-                c.DateCreated >= firstDayOfWeek && c.DateCreated <= lastDayOfWeek && c.BillId != null,
+                c.DateCreated >= firstDayOfWeek && c.DateCreated <= lastDayOfWeek && c.BillId != null&& c.StoreName == whatToSeeClaim,
                 null,
                 ""))
                 .ToList();

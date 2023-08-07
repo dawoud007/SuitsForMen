@@ -120,9 +120,15 @@
 
         // Create the HttpContent from the JSON string
         var content = new StringContent(json, Encoding.UTF8, "application/json");
+        var token = await AuthService.GetAccessTokenAsync();
 
+        // Set the authorization header for the HttpClient
+        if (!string.IsNullOrEmpty(token))
+        {
+            Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        }
         // Make the POST request with the JSON content in the request body
-        var response = await httpClient.PostAsync(Api_Uri + "Cloth/Search", content);
+        var response = await Http.PostAsync(Api_Uri + "Cloth/Search", content);
 
         if (response.IsSuccessStatusCode)
         {

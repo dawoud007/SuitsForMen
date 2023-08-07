@@ -178,6 +178,7 @@ public class AuthController : ControllerBase
         }
 
         Claim[] claims = new Claim[]{
+
         new Claim("WhatToSee", user.WhatToSee!),
         new Claim("Role", user.Role!),
         new Claim("Name", user.UserName!),
