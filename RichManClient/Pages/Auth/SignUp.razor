@@ -1,0 +1,135 @@
+﻿@page "/signup"
+@inject HttpClient Http
+@inject AuthService AuthService
+<style>
+    /* Add your custom styles here */
+    h3 {
+        color: purple;
+        text-align: center;
+    }
+
+    .container {
+        background: linear-gradient(to right, white, blue);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .form-group label {
+        color: blue;
+        font-weight: bold;
+    }
+
+    .form-control {
+        margin-top: 5px;
+        padding: 5px;
+        border: 1px solid blue;
+    }
+
+    .signup-button {
+        background-color: blue;
+        color: white;
+        padding: 10px;
+        border: 25px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    /* Message styles */
+    .success-message {
+        text-align: center;
+        color: green;
+        margin-top: 10px;
+    }
+
+    .error-message {
+        text-align: center;
+        color: red;
+        margin-top: 10px;
+    }
+
+</style>
+
+<h3>Sign Up</h3>
+
+<div class="container">
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" @bind="model.UserName" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" @bind="model.Password" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="role">Role:</label>
+        <input type="text" id="role" @bind="model.Role" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="whatToSee">WhatToSee:</label>
+        <input type="text" id="whatToSee" @bind="model.WhatToSee" class="form-control" />
+    </div>
+    <button @onclick="SignupUser" class="signup-button">Sign Up</button>
+</div>
+
+<!-- Success and error messages -->
+@if (isRegistered)
+{
+    <div class="success-message">
+        User registered successfully!
+    </div>
+}
+@if (isError)
+{
+    <div class="error-message">
+        @errorMessage
+    </div>
+}
+
+
+@code {
+    public class SignUpModel
+    {
+        public string? UserName { get; set; }
+        public string? Password { get; set; }
+        public string? Role { get; set; }
+        public string? WhatToSee { get; set; }
+    }
+    string Api_Uri = "http://localhost:5000/";
+    private SignUpModel model = new SignUpModel();
+    private bool isRegistered = false; // Flag to show success message
+    private bool isError = false; // Flag to show error message
+    private string errorMessage = ""; // Error message text
+
+    private async Task SignupUser()
+    {
+
+        var token = await AuthService.GetAccessTokenAsync();
+
+        // Set the authorization header for the HttpClient
+        if (!string.IsNullOrEmpty(token))
+        {
+            Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        }
+
+        // Make the API call
+        var response = await Http.PostAsJsonAsync(Api_Uri + "Auth/signup", model);
+        if (response.IsSuccessStatusCode)
+        {
+            isRegistered = true; // Show success message
+            isError = false; // Clear error message
+            model = new SignUpModel(); // Clear input fields
+        }
+        else
+        {
+            isError = true; // Show error message
+            var errorMessageResponse = await response.Content.ReadAsStringAsync();
+            errorMessage = errorMessageResponse; // Display the error message
+        }
+      
+    }
+}

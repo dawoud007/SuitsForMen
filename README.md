@@ -1,2 +1,2 @@
-# SuitsForMen
-SuitsForMen
+# RichMan
+RichMan

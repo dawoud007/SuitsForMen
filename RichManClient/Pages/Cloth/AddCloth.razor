@@ -1,0 +1,124 @@
+﻿@page "/addcloth"
+@using ElectronicsShop_service.Dtos
+<style>
+    /* Add your custom styles here */
+    .form-group label {
+        color: white;
+        font-weight: bold;
+    }
+
+    .form-control {
+        border-color: white;
+    }
+
+    .btn-primary {
+        background-color: red;
+        border-color: white;
+        margin-top: 15px;
+    }
+
+    /* New custom styles */
+    .container {
+        background: linear-gradient(to right, red, white);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    /* Center align form and buttons */
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+</style>
+
+<h3>Add New Cloth</h3>
+
+@if (isClothAdded)
+{
+    <div class="alert alert-success mt-3">
+        Cloth added successfully!
+    </div>
+}
+
+<div class="container form-container">
+    <form style="width: 300px;">
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" class="form-control" @bind="@newCloth.Name" />
+        </div>
+        <div class="form-group">
+            <label>Type</label>
+            <input type="text" class="form-control" @bind="@newCloth.type" />
+        </div>
+        <div class="form-group">
+            <label>Size</label>
+            <input type="number" class="form-control" @bind="@newCloth.Size" />
+        </div>
+        <div class="form-group">
+            <label>Color</label>
+            <input type="text" class="form-control" @bind="@newCloth.Color" />
+        </div>
+        <div class="form-group">
+            <label>Number of Pieces</label>
+            <input type="number" class="form-control" @bind="@newCloth.NumOfPieces" />
+        </div>
+        <div class="form-group">
+            <label>Store Name</label>
+            <input type="text" class="form-control" @bind="@newCloth.StoreName" />
+        </div>
+        <div style="margin-top: 25px;">
+            <button type="button" class="btn btn-primary" @onclick="AddNewCloth">Add Cloth</button>
+        </div>
+    </form>
+</div>
+
+
+@code {
+    private ClothDto newCloth = new ClothDto();
+    private bool isClothAdded = false;
+    string Api_Uri = "http://localhost:5000/";
+    private async Task AddNewCloth()
+    {
+        // The rest of the code for adding the cloth remains the same as before.
+    
+
+        // Here, you can make the API call to add the cloth
+        // You can use the 'newCloth' object to send the data to the API
+
+        // Assuming you have a ClothService with a method to add the cloth
+        // You can inject the ClothService into this component and use it to add the cloth.
+        // For this example, I'm using HttpClient to make the POST request.
+
+        using var httpClient = new HttpClient();
+        var response = await httpClient.PostAsJsonAsync(Api_Uri + "Cloth/Post", newCloth);
+
+        if (response.IsSuccessStatusCode)
+        {
+            isClothAdded = true;
+            // Optionally, you can reset the newCloth object to clear the form after successful addition.
+            newCloth = new ClothDto();
+        }
+        else
+        {
+            // Handle the error scenario here (display error message, etc.)
+            isClothAdded = false;
+        }
+    }
+
+
+    /* Center align form and buttons */
+    
+}

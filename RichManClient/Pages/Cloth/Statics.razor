@@ -1,0 +1,184 @@
+﻿@page "/statics"
+@using System.Net.Http.Json
+@using System.Linq
+@using System.Globalization
+@inject HttpClient Http
+@inject AuthService AuthService
+
+<style>
+    /* Custom styles for ClothStatistics component */
+    .cloth-statistics {
+        background-color: #f1f1f1;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+        .cloth-statistics h3 {
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .cloth-statistics .form-group label {
+            font-weight: bold;
+        }
+
+        .cloth-statistics .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .cloth-statistics .table {
+            background-color: #fff;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .cloth-statistics .table th,
+            .cloth-statistics .table td {
+                padding: 8px;
+                border: 1px solid #ccc;
+                text-align: left;
+            }
+
+            .cloth-statistics .table th {
+                background-color: #007bff;
+                color: #fff;
+            }
+
+            .cloth-statistics .table td {
+                background-color: #f9f9f9;
+            }
+
+        .cloth-statistics .card {
+            border: 1px solid #007bff;
+            margin-top: 20px;
+        }
+
+        .cloth-statistics .card-title {
+            color: #007bff;
+        }
+</style>
+
+<h3 class="text-center">Cloth Statistics</h3>
+
+<div class="container cloth-statistics">
+    <div class="form-group">
+        <label for="periodType">Select Period Type:</label>
+        <select class="form-control" @onchange="OnPeriodTypeChange">
+            <option value="Month">Monthly</option>
+            <option value="Week">Weekly</option>
+        </select>
+    </div>
+
+    @if (statistics != null)
+    {
+        <div >
+            <div class="col-md-12">
+                <h4 class="text-center">Period Statistics</h4>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Color</th>
+                            <th>Size</th>
+                            <th>Total Pieces</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var stat in statistics)
+                        {
+                            <tr>
+                                <td>@stat.Name</td>
+                                <td>@stat.Color</td>
+                                <td>@stat.Size</td>
+                                <td>@stat.TotalPieces</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            @if (mostSoldProduct != null)
+            {
+                <div class="col-md-12">
+                    <h4 class="text-center">Most Sold Product</h4>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@mostSoldProduct.Name</h5>
+                            <p class="card-text">Color: @mostSoldProduct.Color</p>
+                            <p class="card-text">Size: @mostSoldProduct.Size</p>
+                            <p class="card-text">Total Pieces: @mostSoldProduct.TotalPieces</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p class="text-center">Loading...</p>
+    }
+</div>
+
+@code {
+    public class GroupedStatistics
+    {
+        public string Name { get; set; }
+        public string Color { get; set; }
+        public int Size { get; set; }
+        public int TotalPieces { get; set; }
+        public string Label { get; set; }
+    }
+
+    private List<GroupedStatistics> statistics;
+    private GroupedStatistics mostSoldProduct;
+    private string selectedPeriodType = "Month";
+    private string Api_Uri = "http://localhost:5000/";
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Get the JWT token from the AuthService
+        var token = await AuthService.GetAccessTokenAsync();
+
+        // Set the authorization header for the HttpClient
+        if (!string.IsNullOrEmpty(token))
+        {
+            Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        }
+
+        // Make the API call
+        await LoadStatistics();
+    }
+
+    private async Task LoadStatistics()
+    {
+        try
+        {
+            var response = await Http.GetFromJsonAsync<ApiResponse>(Api_Uri + $"Bill/GetStatics?periodType={selectedPeriodType}");
+            statistics = response?.Statistics;
+            mostSoldProduct = response?.MostSoldProduct;
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors during the API call
+            // You can display an error message to the user or log the error for debugging
+        }
+    }
+
+    private async Task OnPeriodTypeChange(ChangeEventArgs e)
+    {
+        selectedPeriodType = e.Value.ToString();
+        await LoadStatistics();
+    }
+
+    void GoToAddClothPage()
+    {
+        NavigationManager.NavigateTo("/addcloth");
+    }
+
+    private class ApiResponse
+    {
+        public List<GroupedStatistics> Statistics { get; set; }
+        public GroupedStatistics MostSoldProduct { get; set; }
+    }
+}

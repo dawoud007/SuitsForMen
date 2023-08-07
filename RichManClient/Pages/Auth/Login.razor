@@ -1,0 +1,130 @@
+﻿@page "/login"
+@using ElectronicsShop_service.Dtos
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+@inject IAuthenticationService AuthenticationService
+
+<style>
+    /* Add your custom styles here */
+    h3 {
+        color: purple;
+        text-align: center;
+    }
+
+    .container {
+        background: linear-gradient(to right, white, red);
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .form-group label {
+        color: blue;
+        font-weight: bold;
+    }
+
+    .form-control {
+        margin-top: 5px;
+        padding: 5px;
+        border: 1px solid blue;
+    }
+
+    .login-button {
+        background-color: red;
+        color: white;
+        padding: 10px;
+        border: 25px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+
+    /* Message styles */
+    .success-message {
+        color: green;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .error-message {
+        color: red;
+        text-align: center;
+        margin-top: 10px;
+    }
+
+</style>
+
+<h3>Login</h3>
+
+<div class="container">
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" @bind="model.Username" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" @bind="model.Password" class="form-control" />
+    </div>
+    <button @onclick="LoginUser" class="login-button">Login</button>
+</div>
+
+<!-- Display messages -->
+@if (!string.IsNullOrEmpty(successMessage))
+{
+    <div class="success-message">
+        @successMessage
+    </div>
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="error-message">
+        @errorMessage
+    </div>
+}
+
+@code {
+
+    public class LoginModel
+    {
+        public string? Username { get; set; }
+        public string? Password { get; set; }
+    }
+
+    public class AuthResponse
+    {
+        public string Token { get; set; }
+    }
+    string Api_Uri = "http://localhost:5000/";
+    private LoginModel model = new LoginModel();
+    private string successMessage = string.Empty;
+    private string errorMessage = string.Empty;
+    private async Task LoginUser()
+    {
+        var response = await Http.PostAsJsonAsync(Api_Uri + "Auth/login", model);
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadFromJsonAsync<AuthResponse>();
+            if (result != null && !string.IsNullOrEmpty(result.Token))
+            {
+                // Save the JWT token in local storage
+                await JSRuntime.InvokeVoidAsync("localStorage.setItem", "accessToken", result.Token);
+                await AuthenticationService.Login( result.Token);
+                // Display success message
+                successMessage = "Login succeeded.";
+                // Redirect to the dashboard or another authenticated page
+                NavigationManager.NavigateTo("/");
+            }
+        }
+        else
+        {
+            // Handle login failure
+            errorMessage = "Login failed. Please check your credentials.";
+        }
+    }
+}

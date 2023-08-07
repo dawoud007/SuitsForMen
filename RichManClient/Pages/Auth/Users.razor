@@ -1,0 +1,120 @@
+﻿@page "/userlist"
+@using ElectronicsShop_service.Models
+@using Microsoft.AspNetCore.Components.Authorization
+@inject HttpClient Http
+@inject AuthService AuthService
+@inject NavigationManager NavigationManager
+@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+@inject IAuthenticationService AuthenticationService
+
+<style>
+    /* Add your custom styles here */
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .table th, .table td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        .table th {
+            background: linear-gradient(to right, white, white);
+            color: blue;
+            font-weight: bold;
+        }
+
+        .table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+    .delete-button {
+        background-color: red;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+
+<h3>User List</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>id</th>
+
+            <th>UserName</th>
+            <th>Role</th>
+            <th>WhatToSee</th>
+            <th>delete</th>
+          
+        </tr>
+    </thead>
+    <tbody>
+        @if (users != null && users.Count > 0)
+        {
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.Id</td>
+                    <td>@user.UserName</td>
+                    <td>@user.Role</td>
+                    <td>@user.WhatToSee</td>
+                    <td>
+                        <button class="delete-button" @onclick="() => DeleteUser(user)">Delete</button>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">No users found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+
+    private List<User> users=new List<User>();
+    string Api_Uri = "http://localhost:5000/";
+    protected override async Task OnInitializedAsync()
+    {
+
+        var token = await AuthService.GetAccessTokenAsync();
+
+        // Set the authorization header for the HttpClient
+        if (!string.IsNullOrEmpty(token))
+        {
+            Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        }
+
+        if (!string.IsNullOrEmpty(token))
+        {
+            await LoadUsers();
+        }
+    }
+
+    private async Task LoadUsers()
+    {
+        users = await Http.GetFromJsonAsync<List<User>>(Api_Uri + "Auth/GetAllUsers")!;
+    }
+
+    private async Task DeleteUser(User user)
+    {
+        Console.WriteLine(user.Id);
+        var result = await Http.DeleteAsync(Api_Uri+$"Auth/DeleteUser/{user.UserName}");
+        if (result.IsSuccessStatusCode)
+        {
+            users.Remove(user);
+        }
+        else
+        {
+            // Handle error here
+        }
+    }
+}

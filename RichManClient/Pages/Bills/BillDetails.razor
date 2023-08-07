@@ -1,0 +1,194 @@
+﻿@page "/billdetail/{billId:guid}"
+@using System
+@using ElectronicsShop_service.Models
+@inject HttpClient Http
+@inject AuthService AuthService
+
+<style>
+    /* Custom styles for BillDetails component */
+
+    .row{
+        color:black;
+        font-weight:bolder;
+    }
+    .container {
+        background: linear-gradient(to right, white, blue);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    }
+
+        .container h3 {
+            color: black;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+    .table-label {
+        font-weight: bold;
+    }
+
+    .table-value {
+        text-align: right;
+    }
+
+    .related-cloth {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #f1f1f1;
+        border-radius: 5px;
+    }
+
+        .related-cloth h4 {
+            color: #007bff;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .related-cloth table {
+            background-color: #fff;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        .related-cloth th,
+        .related-cloth td {
+            padding: 8px;
+            border: 1px solid #ccc;
+            text-align: left;
+        }
+
+        .related-cloth th {
+            background-color: #007bff;
+            color: black;
+        }
+
+        .related-cloth td {
+            background-color: #f9f9f9;
+        }
+</style>
+
+<div class="container">
+    <h3>Bill Details</h3>
+
+    @if (bill == null)
+    {
+        <p>Loading...</p>
+    }
+    else
+    {
+        <div class=>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6 table-label">Buyer Name:</div>
+                    <div class="col-md-6 table-value font-weight-bold">@bill.BuyerName</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 table-label">Seller Name:</div>
+                    <div class="col-md-6 table-value font-weight-bold">@bill.SellerName</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 table-label">Description:</div>
+                    <div class="col-md-6 table-value font-weight-bold">@bill.Description</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 table-label">Number of Pieces:</div>
+                    <div class="col-md-6 table-value font-weight-bold">@bill.NumberOfPieces</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 table-label">Date Created:</div>
+                    <div class="col-md-6 table-value font-weight-bold">@bill.DateCreated</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 table-label">warning:</div>
+                    <div class="col-md-6 table-value font-weight-bold">@bill.WarningToNumberOfPieces</div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                @if (billCloth.Any())
+                {
+                    <div class="related-cloth">
+                        <h4>Related Cloth Items</h4>
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Size</th>
+                                    <th>Color</th>
+                                    <th>Number of Pieces</th>
+                                    <th>Store Name</th>
+                                    <th>Date Created</th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var cloth in billCloth)
+                                {
+                                    <tr>
+                                        <td>@cloth.Name</td>
+                                        <td>@cloth.type</td>
+                                        <td>@cloth.Size</td>
+                                        <td>@cloth.Color</td>
+                                        <td>@cloth.NumOfPieces</td>
+                                        <td>@cloth.StoreName</td>
+                                        <td>@cloth.DateCreated</td>
+                                        <td>@cloth.Note</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <p>No Cloth items found for this bill.</p>
+                }
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private BillDto bill;
+    [Parameter] public Guid billId { get; set; }
+    private List<ClothDto> cloths = new List<ClothDto>();
+    private List<ClothDto> billCloth = new List<ClothDto>();
+
+
+    string Api_Uri = "http://localhost:5000/";
+    protected override async Task OnInitializedAsync()
+    {
+        // Get the JWT token from the AuthService
+        var token = await AuthService.GetAccessTokenAsync();
+
+        // Set the authorization header for the HttpClient
+        if (!string.IsNullOrEmpty(token))
+        {
+            Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+        }
+
+        // Make the API call to get the bill details
+        try
+        {
+            bill = await Http.GetFromJsonAsync<BillDto>(Api_Uri +$"Bill/GetBillById?id={billId}");
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors during the API call
+            // You can display an error message to the user or log the error for debugging
+        }
+        try
+        {
+            cloths = await Http.GetFromJsonAsync<List<ClothDto>>(Api_Uri + "Cloth/GetAll")!;
+            billCloth = cloths.Where(c => c.BillId == bill.Id).ToList();
+        }
+        catch (Exception ex)
+        {
+            // Handle any errors during the API call
+            // You can display an error message to the user or log the error for debugging
+        }
+    }
+}
