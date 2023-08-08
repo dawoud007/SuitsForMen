@@ -11,85 +11,85 @@ build_property.EnableTrimAnalyzer = true
 build_property.IncludeAllContentForSelfExtract = 
 build_property.RootNamespace = RichManClient
 build_property.RootNamespace = RichManClient
-build_property.ProjectDir = C:\Users\Mo Dawoud\Desktop\RichManSuits\RichMan\RichManClient\
+build_property.ProjectDir = C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\
 build_property.RazorLangVersion = 6.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = C:\Users\Mo Dawoud\Desktop\RichManSuits\RichMan\RichManClient
+build_property.MSBuildProjectDirectory = C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/App.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/App.razor]
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Auth/Login.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Auth/Login.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxMb2dpbi5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Auth/SignUp.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Auth/SignUp.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxTaWduVXAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Auth/Users.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Auth/Users.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxVc2Vycy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Bills/AddBill.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Bills/AddBill.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmlsbHNcQWRkQmlsbC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Bills/BillDetails.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Bills/BillDetails.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmlsbHNcQmlsbERldGFpbHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Bills/FetchBills.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Bills/FetchBills.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmlsbHNcRmV0Y2hCaWxscy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Bills/SearchBills.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Bills/SearchBills.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmlsbHNcU2VhcmNoQmlsbHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Cloth/AddCloth.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Cloth/AddCloth.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xvdGhcQWRkQ2xvdGgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Cloth/ClothSearch.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Cloth/ClothSearch.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xvdGhcQ2xvdGhTZWFyY2gucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Cloth/DetailedCloth.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Cloth/DetailedCloth.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xvdGhcRGV0YWlsZWRDbG90aC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Cloth/FetchData.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Cloth/FetchData.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xvdGhcRmV0Y2hEYXRhLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Cloth/Statics.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Cloth/Statics.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2xvdGhcU3RhdGljcy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Counter.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Pages/Index.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Pages/Index.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Shared/SurveyPrompt.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Shared/SurveyPrompt.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXFN1cnZleVByb21wdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/_Imports.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Shared/MainLayout.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Shared/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-86hzsli7a0
 
-[C:/Users/Mo Dawoud/Desktop/RichManSuits/RichMan/RichManClient/Shared/NavMenu.razor]
+[C:/Users/Mo Dawoud/Desktop/suits/SuitsForMen/RichManClient/Shared/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-w7giprbrat

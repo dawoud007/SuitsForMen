@@ -98,8 +98,9 @@ public class BillController : MyBaseController<Bill, BillDto>
 	{
 
         var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
-        var result= (await _billRepository.Get(b=>b.BuyerName==searchedBuyertName&&b.SellerName==whatToSeeValue,null,"")).FirstOrDefault();
-
+        var result= (await _billRepository.Get(b=>b.BuyerName==searchedBuyertName&&
+        b.SellerName==whatToSeeValue,null,"")).FirstOrDefault();
+        result.Suits = (await _clothRepository.Get(s => s.BillId == result.Id)).ToList();
 		if (result == null)
 		{
         
@@ -109,14 +110,24 @@ public class BillController : MyBaseController<Bill, BillDto>
         return Ok(result);
 	}
 
-
-	[HttpPost]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpPost]
 	public  async override Task<IActionResult> Post([FromBody] BillDto billDto)
 	{
-		if (!ModelState.IsValid)
+        var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+        if (whatToSeeValue != null)
+        {
+            billDto.SellerName = whatToSeeValue;
+        }
+        else
+        {
+            return BadRequest("يرجى تسجيل الدخول");
+        }
+        if (!ModelState.IsValid)
 		{
 			return BadRequest(ModelState);
 		}
+
 		var list=new List<Cloth>();
 		int WarningToNumberOfPieces=0;
 
@@ -171,7 +182,7 @@ public class BillController : MyBaseController<Bill, BillDto>
 			if (WarningToNumberOfPieces > 0)
 			{
 				var addBillWithAmountWarning=bill.Adapt<BillDto>();
-				addBillWithAmountWarning.WarningToNumberOfPieces = "warning only 10 pieces";
+				addBillWithAmountWarning.WarningToNumberOfPieces = $"warning only {billDto.limit} pieces";
 
 
                 return Ok(addBillWithAmountWarning);

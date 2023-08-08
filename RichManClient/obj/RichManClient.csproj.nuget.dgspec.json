@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Mo Dawoud\\Desktop\\RichManSuits\\RichMan\\RichManClient\\RichManClient.csproj": {}
+    "C:\\Users\\Mo Dawoud\\Desktop\\suits\\SuitsForMen\\RichManClient\\RichManClient.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Mo Dawoud\\Desktop\\RichManSuits\\RichMan\\RichManClient\\RichManClient.csproj": {
+    "C:\\Users\\Mo Dawoud\\Desktop\\suits\\SuitsForMen\\RichManClient\\RichManClient.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Mo Dawoud\\Desktop\\RichManSuits\\RichMan\\RichManClient\\RichManClient.csproj",
+        "projectUniqueName": "C:\\Users\\Mo Dawoud\\Desktop\\suits\\SuitsForMen\\RichManClient\\RichManClient.csproj",
         "projectName": "RichManClient",
-        "projectPath": "C:\\Users\\Mo Dawoud\\Desktop\\RichManSuits\\RichMan\\RichManClient\\RichManClient.csproj",
+        "projectPath": "C:\\Users\\Mo Dawoud\\Desktop\\suits\\SuitsForMen\\RichManClient\\RichManClient.csproj",
         "packagesPath": "C:\\Users\\Mo Dawoud\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Mo Dawoud\\Desktop\\RichManSuits\\RichMan\\RichManClient\\obj\\",
+        "outputPath": "C:\\Users\\Mo Dawoud\\Desktop\\suits\\SuitsForMen\\RichManClient\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Mo Dawoud\\AppData\\Roaming\\NuGet\\NuGet.Config",

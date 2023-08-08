@@ -65,6 +65,7 @@ namespace ElectronicsShop_service.Controllers
 			{
 				return BadRequest(validationResult.Errors.Select((e) => e.ErrorMessage));
 			}
+		
 
 			entity = await _unitOfWork.CreateAsync(entity);
 			try

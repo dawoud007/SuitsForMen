@@ -7,25 +7,25 @@
 <div class="container">
     <div class="row">
         <div class="col-md-6">
-            <h3>Cloth Detail</h3>
+            <h3>تفاصيل القطعة</h3>
             @if (cloth != null)
             {
                 <div>
-                    <p><strong>Name:</strong> @cloth.Name</p>
-                    <p><strong>Color:</strong> @cloth.Color</p>
-                    <p><strong>Size:</strong> @cloth.Size</p>
-                    <p><strong>Type:</strong> @cloth.type</p>
-                    <p><strong>Number of Pieces:</strong> @cloth.NumOfPieces</p>
-                    <p><strong>Store Name:</strong> @cloth.StoreName</p>
+                    <p><strong>الاسم:</strong> @cloth.Name</p>
+                    <p><strong>اللون:</strong> @cloth.Color</p>
+                    <p><strong>المقاس:</strong> @cloth.Size</p>
+                    <p><strong>الماركة:</strong> @cloth.type</p>
+                    <p><strong>عدد القطع:</strong> @cloth.NumOfPieces</p>
+                 
                     @if (!string.IsNullOrEmpty(cloth.Note))
                     {
-                        <p><strong>Note:</strong> @cloth.Note</p>
+                        <p><strong>ملاحظة:</strong> @cloth.Note</p>
                     }
                 </div>
             }
             else
             {
-                <p>Loading...</p>
+                <p>تحميل.....</p>
             }
         </div>
     </div>

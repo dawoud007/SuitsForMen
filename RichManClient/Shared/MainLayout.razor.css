@@ -9,14 +9,15 @@ main {
 }
 
 .sidebar {
-    background-color:blue;
+    background-color: black;
+    width: 150px;
 }
 
 .top-row {
     background-color: #f7f7f7;
    
     justify-content: flex-end;
-    height: 3.0rem;
+    height: 2.5rem;
     display: flex;
     align-items: center;
 }
@@ -56,9 +57,9 @@ main {
     }
 
     .sidebar {
-        width: 130px;
+        width: 150px;
         height: 100vh;
-        position:relative;
+        position:sticky;
         top: 0;
     }
 

@@ -5,13 +5,13 @@
 @inject AuthService AuthService
 @inject NavigationManager NavigationManager
 
-<PageTitle>Bill</PageTitle>
+<PageTitle>فاتورة</PageTitle>
 
-<h1>Bill</h1>
+
 
 <div class="d-flex justify-content-between">
-    <button class="btn btn-outline-primary" @onclick="GoToAddBillPage">Add Bill</button>
-    <button class="btn btn-outline-danger" @onclick="GoToSearchBillPage">Search Bill</button>
+    <button class="btn btn-outline-primary" @onclick="GoToAddBillPage">اضافة فاتورة</button>
+    <button class="btn btn-outline-danger" @onclick="GoToSearchBillPage">البحث عن فاتورة</button>
 </div>
 
 @if (bills == null)
@@ -23,10 +23,10 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Buyer Name</th>
-                <th>Seller Name</th>
-                <th>Description</th>
-                <th>Warning</th>
+                <th>اسم المشتري</th>
+                <th>اسم المحل</th>
+                <th>تفاصيل</th>
+                <th>تحذير</th>
             </tr>
         </thead>
         <tbody>
@@ -36,7 +36,7 @@ else
                     <td>@bill.BuyerName</td>
                     <td>@bill.SellerName</td>
                     <td>@bill.Description</td>
-                    @if (bill.WarningToNumberOfPieces == "warning only 10 pieces")
+                    @if (bill.WarningToNumberOfPieces == $"warning only {bill.limit} pieces")
                     {
                         <td style="background-color:red;">@bill.WarningToNumberOfPieces</td>
 
@@ -46,8 +46,8 @@ else
                     }
                 
                     <td>
-                        <button class="btn btn-danger" @onclick="() => DeleteBill(bill)">Delete</button>
-                        <button class="btn btn-info" @onclick="() => NavigateToBillDetail(bill.Id)">View</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteBill(bill)">مسح</button>
+                        <button class="btn btn-info" @onclick="() => NavigateToBillDetail(bill.Id)">دخول</button>
 
                     </td>
                 </tr>

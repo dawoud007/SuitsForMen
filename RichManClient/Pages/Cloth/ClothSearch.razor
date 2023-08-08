@@ -7,31 +7,31 @@
 @using System.Text;
 @inject HttpClient Http
 
-<PageTitle>Search</PageTitle>
+<PageTitle>بحث</PageTitle>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h3 class="text-center mb-4" style="color: red;">Search Cloth</h3>
+            <h3 class="text-center mb-4" style="color: red;">ابحت عن القطعة</h3>
             <form>
                 <div class="form-group">
-                    <label for="nameInput" class="form-label">Name</label>
+                    <label for="nameInput" class="form-label">الاسم</label>
                     <input type="text" class="form-control" id="nameInput" @bind="searchCriteria.Name" />
                 </div>
                 <div class="form-group">
-                    <label for="sizeInput" class="form-label">Size</label>
+                    <label for="sizeInput" class="form-label">المقاس</label>
                     <input type="number" class="form-control" id="sizeInput" @bind="searchCriteria.Size" />
                 </div>
                 <div class="form-group">
-                    <label for="colorInput" class="form-label">Color</label>
+                    <label for="colorInput" class="form-label">اللون</label>
                     <input type="text" class="form-control" id="colorInput" @bind="searchCriteria.Color" />
                 </div>
                 <div class="form-group">
-                    <label for="makeInput" class="form-label">Make</label>
+                    <label for="makeInput" class="form-label">الماركة</label>
                     <input type="text" class="form-control" id="makeInput" @bind="searchCriteria.Make" />
                 </div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-search" @onclick="Search">Search</button>
+                    <button type="button" class="btn btn-primary btn-search" @onclick="Search">بحث</button>
                 </div>
             </form>
         </div>
@@ -41,23 +41,23 @@
         <div class="col-md-8">
             @if (cloths == null)
             {
-                <p class="text-center"><em>Loading...</em></p>
+                <p class="text-center"><em>...تحميل</em></p>
             }
             else if (cloths.Count == 0)
             {
-                <p class="text-center" style="color: red;">No matching products found.</p>
+                <p class="text-center" style="color: red;">لا يوجد قطع مماثلة</p>
             }
             else
             {
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th style="color: red;">Name</th>
-                            <th style="color: red;">Color</th>
-                            <th style="color: red;">Size</th>
-                            <th style="color: red;">Make</th>
-                            <th style="color: red;">NumOfPieces</th>
-                            <th style="color: red;">StoreName</th>
+                            <th style="color: red;">الاسم</th>
+                            <th style="color: red;">اللون</th>
+                            <th style="color: red;">المقاس</th>
+                            <th style="color: red;">الماركة</th>
+                            <th style="color: red;">عدد القطع</th>
+                         
                         </tr>
                     </thead>
                     <tbody>
@@ -72,7 +72,7 @@
                                     <td>@cloth.Size</td>
                                     <td>@cloth.type</td>
                                     <td>@cloth.NumOfPieces</td>
-                                    <td>@cloth.StoreName</td>
+                                
                                 </tr>
                             }
                         }

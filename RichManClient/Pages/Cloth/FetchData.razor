@@ -5,23 +5,23 @@
 @inject AuthService AuthService
 @inject NavigationManager NavigationManager
 
-<PageTitle>cloth</PageTitle>
+<PageTitle>قطع المحل</PageTitle>
 
-<h1>cloth</h1>
 
-<div class="d-flex justify-content-end mb-3">
-    <button class="btn btn-primary" @onclick="GoToAddClothPage">Add Cloth</button>
+
+<div class="d-flex justify-content-start mb-3">
+    <button class="btn btn-primary" @onclick="GoToAddClothPage">اضف قطعة</button>
 </div>
 
 <table class="table">
     <thead>
         <tr>
-            <th>name</th>
-            <th>color</th>
-            <th>size</th>
-            <th>make</th>
-            <th>NumOfPieces</th>
-            <th>StoreName</th>
+            <th>الاسم</th>
+            <th>اللون</th>
+            <th>المقاس</th>
+            <th>الماركة</th>
+            <th>عدد القطع</th>
+       
         </tr>
     </thead>
     <tbody>
@@ -35,10 +35,10 @@
                     <td>@cloth.Size</td>
                     <td>@cloth.type</td>
                     <td>@cloth.NumOfPieces</td>
-                    <td>@cloth.StoreName</td>
+                 
                     <td>
-                        <button class="btn btn-danger" @onclick="() => DeleteCloth(cloth)">Delete</button>
-                        <button class="btn btn-warning" @onclick="() => ToggleClothDetails(cloth)">View</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteCloth(cloth)">مسح</button>
+                        <button class="btn btn-warning" @onclick="() => ToggleClothDetails(cloth)">دخول</button>
                     </td>
                 </tr>
                 @if (selectedClothId == cloth.Id)
@@ -48,39 +48,36 @@
                             <table class="cloth-details-table">
                                 <tbody>
                                     <tr>
-                                        <td class="table-variable">Name</td>
+                                        <td class="table-variable">الاسم</td>
                                         <td>@cloth.Name</td>
                                     </tr>
                                     <tr>
-                                        <td class="table-variable">Type</td>
+                                        <td class="table-variable">الماركة</td>
                                         <td>@cloth.type</td>
                                     </tr>
                                     <tr>
-                                        <td class="table-variable">Size</td>
+                                        <td class="table-variable">المقاس</td>
                                         <td>@cloth.Size</td>
                                     </tr>
                                     <tr>
-                                        <td class="table-variable">Color</td>
+                                        <td class="table-variable">اللون</td>
                                         <td>@cloth.Color</td>
                                     </tr>
                                     <tr>
-                                        <td class="table-variable">Number of Pieces</td>
+                                        <td class="table-variable">عدد القطع</td>
                                         <td>@cloth.NumOfPieces</td>
                                     </tr>
-                                    <tr>
-                                        <td class="table-variable">Store Name</td>
-                                        <td>@cloth.StoreName</td>
-                                    </tr>
+                               
                                     @if (!string.IsNullOrEmpty(cloth.Note))
                                     {
                                         <tr>
-                                            <td class="table-variable">Note</td>
+                                            <td class="table-variable">ملاحظة</td>
                                             <td>@cloth.Note</td>
                                         </tr>
                                     }
                                 </tbody>
                             </table>
-                            <button class="btn btn-warning" @onclick="HideClothDetails">Hide Details</button>
+                            <button class="btn btn-warning" @onclick="HideClothDetails">اخفاء</button>
                         </td>
                     </tr>
                 }
@@ -112,6 +109,7 @@
     }
     .cloth-details {
         background-color: #d9e7fc;
+     
     }
 
     .cloth-details-table {

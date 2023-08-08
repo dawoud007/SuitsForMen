@@ -4,6 +4,7 @@ using ElectronicsShop_service.Interfaces;
 using ElectronicsShop_service.Models;
 using ElectronicsShop_service.Repositories;
 using FluentValidation;
+using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,51 @@ public class ClothController : MyBaseController<Cloth, ClothDto>
     {
 		_clothRepository = clothRepository;
 	}
+
+
+
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpPost]
+    public async Task<IActionResult> PostCloth([FromBody] ClothDto clothDto)
+    {
+        
+        var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+        if (whatToSeeValue != null)
+        {
+            clothDto.StoreName = whatToSeeValue;
+        }
+        else
+        {
+            return BadRequest("يرجى تسجيل الدخول");
+        }
+
+        if(clothDto.NumOfPieces == 0)
+        {
+            return BadRequest("ادخل  عدد القطع");
+        }
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        var addedCloth = clothDto.Adapt<Cloth>();
+        var clothAlreadyExists = (await _clothRepository.Get(c => c.Name == clothDto.Name &&
+        c.Size == clothDto.Size && c.type == clothDto.type, null, "")).FirstOrDefault();
+
+        if (clothAlreadyExists == null)
+        {
+           
+            await _clothRepository.AddAsync(addedCloth);
+            await _clothRepository.Save();
+        }
+        else
+        {
+            clothAlreadyExists.NumOfPieces += clothDto.NumOfPieces;
+            await _clothRepository.Save();
+            return Ok(clothAlreadyExists);
+        }
+        return Ok(addedCloth);
+   
+    }
 
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpGet]

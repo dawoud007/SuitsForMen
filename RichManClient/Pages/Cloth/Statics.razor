@@ -60,14 +60,14 @@
         }
 </style>
 
-<h3 class="text-center">Cloth Statistics</h3>
+<h3 class="text-center">احصائيات البيع</h3>
 
 <div class="container cloth-statistics">
     <div class="form-group">
-        <label for="periodType">Select Period Type:</label>
+        <label for="periodType">اختار المدة</label>
         <select class="form-control" @onchange="OnPeriodTypeChange">
-            <option value="Month">Monthly</option>
-            <option value="Week">Weekly</option>
+            <option value="Month">شهريا</option>
+            <option value="Week">اسبوعيا</option>
         </select>
     </div>
 
@@ -75,14 +75,14 @@
     {
         <div >
             <div class="col-md-12">
-                <h4 class="text-center">Period Statistics</h4>
+                <h4 class="text-center">المدة</h4>
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Color</th>
-                            <th>Size</th>
-                            <th>Total Pieces</th>
+                            <th>الاسم</th>
+                            <th>اللون</th>
+                            <th>المقاس</th>
+                            <th>العدد الكلي</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,7 +101,7 @@
             @if (mostSoldProduct != null)
             {
                 <div class="col-md-12">
-                    <h4 class="text-center">Most Sold Product</h4>
+                    <h4 class="text-center">اكثر العناصر مبيعا</h4>
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title">@mostSoldProduct.Name</h5>
@@ -116,7 +116,7 @@
     }
     else
     {
-        <p class="text-center">Loading...</p>
+        <p class="text-center">تحميل...</p>
     }
 </div>
 

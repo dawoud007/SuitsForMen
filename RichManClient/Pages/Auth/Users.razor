@@ -39,40 +39,35 @@
     }
 </style>
 
-<h3>User List</h3>
+<h3>قائمة المحلات</h3>
 
 <table class="table">
     <thead>
         <tr>
-            <th>id</th>
 
-            <th>UserName</th>
-            <th>Role</th>
-            <th>WhatToSee</th>
-            <th>delete</th>
+            <th>الاسم</th>
+            <th>المنصب</th>
+            <th>اسم المحل</th>
           
         </tr>
     </thead>
     <tbody>
-        @if (users != null && users.Count > 0)
+        @if (users != null && users.Count > 0 )
         {
             @foreach (var user in users)
             {
                 <tr>
-                    <td>@user.Id</td>
                     <td>@user.UserName</td>
                     <td>@user.Role</td>
                     <td>@user.WhatToSee</td>
-                    <td>
-                        <button class="delete-button" @onclick="() => DeleteUser(user)">Delete</button>
-                    </td>
+                
                 </tr>
             }
         }
         else
         {
             <tr>
-                <td colspan="4">No users found.</td>
+                <td colspan="4">لا يوجد محلات</td>
             </tr>
         }
     </tbody>

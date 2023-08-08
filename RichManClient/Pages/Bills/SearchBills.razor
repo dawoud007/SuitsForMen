@@ -3,19 +3,19 @@
 @using Microsoft.AspNetCore.Components
 @inject HttpClient Http
 
-<PageTitle>Search Bill by Buyer Name</PageTitle>
+<PageTitle>ابحث باسم المشتري</PageTitle>
 
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h3 class="text-center mb-4">Search Bill by Buyer Name</h3>
+            <h3 class="text-center mb-4">ابحث باسم المشتري</h3>
             <form>
                 <div class="form-group">
                     <label for="buyerNameInput" class="form-label">Buyer Name</label>
                     <input type="text" class="form-control" id="buyerNameInput" @bind="searchedBuyerName" />
                 </div>
                 <div class="text-center">
-                    <button type="button" class="btn btn-primary btn-search" @onclick="Search">Search</button>
+                    <button type="button" class="btn btn-primary btn-search" @onclick="Search">بحث</button>
                 </div>
             </form>
         </div>
@@ -31,7 +31,7 @@
             }
             else if (bill == null)
             {
-                <p class="text-center"><em>No matching bill found.</em></p>
+                <p class="text-center"><em>لا يوجد فاتورة مماثلة</em></p>
             }
             else
             {
@@ -40,10 +40,13 @@
                         Bill Information
                     </div>
                     <div class="card-body">
-                        <p><strong>Buyer Name:</strong> @bill.BuyerName</p>
-                        <p><strong>Seller Name:</strong> @bill.SellerName</p>
-                        <p><strong>Description:</strong> @bill.Description</p>
-                        <p><strong>Warning to Number of Pieces:</strong> @bill.WarningToNumberOfPieces</p>
+                        <p><strong>اسم المشتري:</strong> @bill.BuyerName</p>
+                        <p><strong>اسم المحل:</strong> @bill.SellerName</p>
+                        <p><strong>تفاصيل:</strong> @bill.Description</p>
+                        @if (bill.WarningToNumberOfPieces == $"warning only {bill.limit} pieces")
+                        {
+                            <p><strong>تحذير عدد القطع:</strong> @bill.WarningToNumberOfPieces</p>
+                        }
                         <!-- Display suits if available -->
                         @if (bill.Suits != null && bill.Suits.Any())
                         {

@@ -70,58 +70,61 @@
 </style>
 
 <div class="container">
-    <h3>Bill Details</h3>
+    <h3>تفاصيل الفاتورة</h3>
 
     @if (bill == null)
     {
-        <p>Loading...</p>
+        <p>تحميل...</p>
     }
     else
     {
         <div class=>
             <div class="col-md-12">
                 <div class="row">
-                    <div class="col-md-6 table-label">Buyer Name:</div>
+                    <div class="col-md-6 table-label">اسم المشتري</div>
                     <div class="col-md-6 table-value font-weight-bold">@bill.BuyerName</div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 table-label">Seller Name:</div>
+                    <div class="col-md-6 table-label">اسم المحل</div>
                     <div class="col-md-6 table-value font-weight-bold">@bill.SellerName</div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 table-label">Description:</div>
+                    <div class="col-md-6 table-label">تفاصيل العملية</div>
                     <div class="col-md-6 table-value font-weight-bold">@bill.Description</div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 table-label">Number of Pieces:</div>
+                    <div class="col-md-6 table-label">عدد القطع</div>
                     <div class="col-md-6 table-value font-weight-bold">@bill.NumberOfPieces</div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6 table-label">Date Created:</div>
+                    <div class="col-md-6 table-label">تاريخ الانشاء</div>
                     <div class="col-md-6 table-value font-weight-bold">@bill.DateCreated</div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 table-label">warning:</div>
+                @if (bill.WarningToNumberOfPieces == $"warning only {bill.limit} pieces")
+                {
+                    <div class="row">
+                        <div class="col-md-6 table-label">تحذير كمية</div>
                     <div class="col-md-6 table-value font-weight-bold">@bill.WarningToNumberOfPieces</div>
                 </div>
+                }
             </div>
 
             <div class="col-md-12">
                 @if (billCloth.Any())
                 {
                     <div class="related-cloth">
-                        <h4>Related Cloth Items</h4>
+                        <h4>قطع الفاتورة</h4>
                         <table class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Size</th>
-                                    <th>Color</th>
-                                    <th>Number of Pieces</th>
-                                    <th>Store Name</th>
-                                    <th>Date Created</th>
-                                    <th>Note</th>
+                                    <th>اسم القطعة</th>
+                                    <th>الماركة</th>
+                                    <th>المقاس</th>
+                                    <th>اللون</th>
+                                    <th>عدد القطع</th>
+                                    <th>اسم المحل</th>
+                                    <th>تاريخ الفاتورة</th>
+                                    <th>ملاحظة</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -144,7 +147,7 @@
                 }
                 else
                 {
-                    <p>No Cloth items found for this bill.</p>
+                    <p>لا يوجد قطع.</p>
                 }
             </div>
         </div>

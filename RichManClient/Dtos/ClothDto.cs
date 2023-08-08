@@ -17,6 +17,7 @@ namespace ElectronicsShop_service.Dtos
         public DateTime DateCreated { get; set; } = DateTime.Now;
         public string? Color { get; set; }
         public Guid? BillId { get; set; }
+        
         public int NumOfPieces { get; set; }
         public string? Note { get; set; } = "";
         public string? StoreName { get; set; }
