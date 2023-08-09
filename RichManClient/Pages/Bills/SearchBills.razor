@@ -67,27 +67,51 @@
 
 <style>
     /* Custom CSS for styling */
-    .btn-search {
+      .btn-search {
+        background-color: #11d;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
         margin-top: 20px;
-        background-color: red;
-        border-color: black;
-    }
+        font-weight: bold;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
 
-    /* Adjust the form inputs' styles */
-    .form-control {
+      .btn-search:hover {
+        background-color: #071952; /* Slightly darker color on hover */
+        /* color: #000; */
+      }
+
+      /* Adjust the form inputs' styles */
+      .form-control {
         border-color: black;
         border-width: 2px;
-    }
+      }
 
-    /* Set a custom width for the form */
-    .col-md-6 {
+      /* Set a custom width for the form */
+      .col-md-6 {
         max-width: 400px;
-    }
+      }
 
-    /* Add some space between the card and the form */
-    .mt-5 {
+      /* Add some space between the card and the form */
+      .mt-5 {
         margin-top: 30px;
-    }
+      }
+      .card {
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      }
+      .card-header {
+        background-color: #000000d8;
+        color: #fff;
+      }
+      h3,
+      h4 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #000;
+      }
 </style>
 
 @code {

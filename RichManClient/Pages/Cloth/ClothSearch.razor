@@ -12,8 +12,8 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h3 class="text-center mb-4" style="color: red;">ابحت عن القطعة</h3>
-            <form>
+            <h3 class="text-center mb-4">ابحت عن القطعة</h3>
+            <form class="form-wrapper">
                 <div class="form-group">
                     <label for="nameInput" class="form-label">الاسم</label>
                     <input type="text" class="form-control" id="nameInput" @bind="searchCriteria.Name" />
@@ -52,11 +52,11 @@
                 <table class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th style="color: red;">الاسم</th>
-                            <th style="color: red;">اللون</th>
-                            <th style="color: red;">المقاس</th>
-                            <th style="color: red;">الماركة</th>
-                            <th style="color: red;">عدد القطع</th>
+                            <th >الاسم</th>
+                            <th >اللون</th>
+                            <th >المقاس</th>
+                            <th >الماركة</th>
+                            <th >عدد القطع</th>
                          
                         </tr>
                     </thead>
@@ -84,29 +84,54 @@
 </div>
 
 <style>
-    /* Custom CSS for styling */
-    .btn-search {
-        margin-top: 20px;
-        background-color: red;
-        border-color: black;
-    }
+      /* Custom CSS for styling */
+      .btn-search {
+        background-color: #11d;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 15px;
+        font-weight: bold;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
 
-    /* Adjust the form inputs' styles */
-    .form-control {
+      .btn-search:hover {
+        background-color: #071952; /* Slightly darker color on hover */
+      }
+      .form-wrapper {
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Adjust the form inputs' styles */
+      .form-control {
         border-color: black;
         border-width: 2px;
-    }
+      }
 
-    /* Set a custom width for the form */
-    .col-md-6 {
+      /* Set a custom width for the form */
+      .col-md-6 {
         max-width: 400px;
-    }
+      }
 
-    /* Add some space between the table and the form */
-    .mt-5 {
+      th {
+        color: #11d;
+      }
+      /* Add some space between the table and the form */
+      .mt-5 {
         margin-top: 30px;
-    }
-</style>
+      }
+
+      h3,
+      h4 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: #000;
+      }
+    </style>
 @code {
     private ClothSearchDto searchCriteria = new ClothSearchDto();
     private List<Cloth> cloths;
