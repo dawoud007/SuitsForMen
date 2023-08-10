@@ -93,21 +93,12 @@
                     <div class="col-md-6 table-label">تفاصيل العملية</div>
                     <div class="col-md-6 table-value font-weight-bold">@bill.Description</div>
                 </div>
-                <div class="row">
-                    <div class="col-md-6 table-label">عدد القطع</div>
-                    <div class="col-md-6 table-value font-weight-bold">@bill.NumberOfPieces</div>
-                </div>
+          
                 <div class="row">
                     <div class="col-md-6 table-label">تاريخ الانشاء</div>
                     <div class="col-md-6 table-value font-weight-bold">@bill.DateCreated</div>
                 </div>
-                @if (bill.WarningToNumberOfPieces == $"warning only {bill.limit} pieces")
-                {
-                    <div class="row">
-                        <div class="col-md-6 table-label">تحذير كمية</div>
-                    <div class="col-md-6 table-value font-weight-bold">@bill.WarningToNumberOfPieces</div>
-                </div>
-                }
+               
             </div>
 
             <div class="col-md-12">

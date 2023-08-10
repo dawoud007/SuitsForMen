@@ -91,12 +91,12 @@
 
 <div class="container form-container">
 
-    <h3>Add New Bill</h3>
+    <h3>اضف فاتورة</h3>
  
     @if (isBillAdded)
     {
         <div class="alert alert-success mt-3">
-            Bill added successfully!
+            تم اضافة الفاتورة!
         </div>
     }
 
@@ -110,18 +110,12 @@
     <form class="form-wrapper">
       <div class="options">
 
-        <div class="form-group">
-            <label for="limitInput">الحد الادنى</label>
-            <input type="number" class="form-control" @bind="@newBill.limit" id="limitInput" />
-        </div>
+      
         <div class="form-group">
             <label>اسم المشتري</label>
             <input type="text" class="form-control" @bind="@newBill.BuyerName" />
         </div>
-        <!-- <div class="form-group">
-            <label>اسم المحل</label>
-            <input type="text" class="form-control" @bind="@newBill.SellerName" />
-        </div> -->
+       
         <div class="form-group">
             <label>تفاصيل اضافية</label>
             <input type="text" class="form-control" @bind="@newBill.Description" />
@@ -131,8 +125,8 @@
       
     
         <!-- Allow user to add multiple Cloth objects to the bill -->
-        <div class="clothes">
-            <h4>Clothes:</h4>
+        <div class="clothes options">
+            <h4>اضافة قطعة:</h4>
         @if (newBill.Suits != null && newBill.Suits.Any())
         {
             @foreach (var cloth in newBill.Suits)

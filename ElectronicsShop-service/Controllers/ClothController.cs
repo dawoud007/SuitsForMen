@@ -79,6 +79,13 @@ public class ClothController : MyBaseController<Cloth, ClothDto>
 
      /*   var clothData=await _clothRepository.GetAllAsync();*/
         var clothData = (await _clothRepository.Get(c => c.StoreName == whatToSeeValue)).ToList();
+        foreach( var cloth in clothData )
+        {
+            if(cloth.NumOfPieces==0)
+            {
+                 _clothRepository.Remove(cloth);
+            }
+        }
    /*     var filteredClothData = clothData.Where(c => c.StoreName == whatToSeeValue);*/
 
         return Ok(clothData);

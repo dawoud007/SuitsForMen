@@ -26,7 +26,7 @@ else
                 <th>اسم المشتري</th>
                 <th>اسم المحل</th>
                 <th>تفاصيل</th>
-                <th>تحذير</th>
+              
             </tr>
         </thead>
         <tbody>
@@ -36,14 +36,8 @@ else
                     <td>@bill.BuyerName</td>
                     <td>@bill.SellerName</td>
                     <td>@bill.Description</td>
-                    @if (bill.WarningToNumberOfPieces == $"warning only {bill.limit} pieces")
-                    {
-                        <td style="background-color:red;">@bill.WarningToNumberOfPieces</td>
-
-                    }else
-                    {
-                        <td></td>
-                    }
+               
+                    
                 
                     <td>
                         <button class="btn btn-danger" @onclick="() => DeleteBill(bill)">مسح</button>

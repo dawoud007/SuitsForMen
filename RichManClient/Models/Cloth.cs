@@ -17,13 +17,14 @@ namespace ElectronicsShop_service.Models
 
 		[Required]
 		public string Color { get; set; }
+        [Range(1, int.MaxValue, ErrorMessage = "The value must be greater than 0.")]
+        public int NumOfPieces { get; set; }
 
-		public int NumOfPieces { get; set; }
-
-		[Required]
-		public string StoreName { get; set; }
-
-		public string? Note { get; set; } = "";
+	
+		public string? StoreName { get; set; }
+        public int? limit { get; set; } = 10;
+        public int? Gomla { get; set; }
+        public string? Note { get; set; } = "";
 
 		public Guid? BillId { get; set; }
 

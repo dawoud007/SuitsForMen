@@ -99,9 +99,13 @@ public class BillController : MyBaseController<Bill, BillDto>
 
         var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
         var result= (await _billRepository.Get(b=>b.BuyerName==searchedBuyertName&&
-        b.SellerName==whatToSeeValue,null,"")).FirstOrDefault();
-        result.Suits = (await _clothRepository.Get(s => s.BillId == result.Id)).ToList();
-		if (result == null)
+        b.SellerName==whatToSeeValue,null,"")).ToList();
+        foreach(var res in result)
+        {
+            res.Suits = (await _clothRepository.Get(s => s.BillId == res.Id)).ToList();
+        }
+
+        if (result == null)
 		{
         
             return NotFound("لا توجد فاتورة بهذا الاسم");
@@ -114,10 +118,12 @@ public class BillController : MyBaseController<Bill, BillDto>
     [HttpPost]
 	public  async override Task<IActionResult> Post([FromBody] BillDto billDto)
 	{
+
         var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
         if (whatToSeeValue != null)
         {
             billDto.SellerName = whatToSeeValue;
+            
         }
         else
         {
@@ -134,6 +140,7 @@ public class BillController : MyBaseController<Bill, BillDto>
 		
 		foreach(var suit in billDto.Suits!)
 		{
+          
 			list.Add(suit);
 
 		}
@@ -152,17 +159,21 @@ public class BillController : MyBaseController<Bill, BillDto>
 
 			if (billDto.Suits != null && billDto.Suits.Any())
 			{
-				foreach (var suitDto in billDto.Suits)
-				{  var suits = await FindSuitWithFeatures(suitDto!);
+                foreach (var suitDto in billDto.Suits)
+                {
+
+                    suitDto.StoreName = billDto.SellerName;
+
+                    var suits = await FindSuitWithFeatures(suitDto!);
 					if (suitDto != null)
 					{
 						if (suitDto.NumOfPieces <= suits.NumOfPieces)
 						{
 							suits.NumOfPieces -=suitDto.NumOfPieces;
-							if (suits.NumOfPieces <= billDto.limit)
+						/*	if (suits.NumOfPieces <= billDto.limit)
 							{
 								WarningToNumberOfPieces=suitDto.NumOfPieces;
-							}
+							}*/
 							
 						}
 						else
@@ -179,14 +190,14 @@ public class BillController : MyBaseController<Bill, BillDto>
 
 			await _billRepository.Save();
 
-			if (WarningToNumberOfPieces > 0)
+		/*	if (WarningToNumberOfPieces > 0)
 			{
 				var addBillWithAmountWarning=bill.Adapt<BillDto>();
 				addBillWithAmountWarning.WarningToNumberOfPieces = $"warning only {billDto.limit} pieces";
 
 
                 return Ok(addBillWithAmountWarning);
-			}
+			}*/
 			return Ok(bill);
 		}
 		catch (Exception ex)
