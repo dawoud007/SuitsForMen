@@ -86,7 +86,6 @@
 @code {
 
     private List<User> users=new List<User>();
-    string Api_Uri = "http://localhost:5000/";
     protected override async Task OnInitializedAsync()
     {
 
@@ -106,13 +105,13 @@
 
     private async Task LoadUsers()
     {
-        users = await Http.GetFromJsonAsync<List<User>>(Api_Uri + "Auth/GetAllUsers")!;
+        users = await Http.GetFromJsonAsync<List<User>>(sharedStateService.Api_Uri + "Auth/GetAllUsers")!;
     }
 
     private async Task DeleteUser(User user)
     {
         Console.WriteLine(user.Id);
-        var result = await Http.DeleteAsync(Api_Uri+$"Auth/DeleteUser/{user.UserName}");
+        var result = await Http.DeleteAsync(sharedStateService.Api_Uri + $"Auth/DeleteUser/{user.UserName}");
         if (result.IsSuccessStatusCode)
         {
             users.Remove(user);

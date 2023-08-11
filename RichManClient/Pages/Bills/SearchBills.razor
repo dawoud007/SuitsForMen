@@ -39,16 +39,13 @@
                 {
                     <div class="card">
                         <div class="card-header">
-                            Bill Information
+                        تفاصيل الفاتورة
                         </div>
                         <div class="card-body">
                             <p><strong>اسم المشتري:</strong> @bill.BuyerName</p>
                             <p><strong>اسم المحل:</strong> @bill.SellerName</p>
                             <p><strong>تفاصيل:</strong> @bill.Description</p>
-                            @if (bill.WarningToNumberOfPieces == $"warning only {bill.limit} pieces")
-                            {
-                                <p><strong>تحذير عدد القطع:</strong> @bill.WarningToNumberOfPieces</p>
-                            }
+                        
                             <!-- Display suits if available -->
                             @if (bill.Suits != null && bill.Suits.Any())
                             {
@@ -129,7 +126,7 @@
         try
         {
             // Make the GET request with the searchedBuyerName as a query parameter
-            var response = await Http.GetFromJsonAsync<List<BillDto>>("http://localhost:5000/Bill/GetBillWithBuyerName?searchedBuyertName=" + searchedBuyerName);
+            var response = await Http.GetFromJsonAsync<List<BillDto>>(sharedStateService.Api_Uri + "Bill/GetBillWithBuyerName?searchedBuyertName=" + searchedBuyerName);
 
             if (response != null )
             {

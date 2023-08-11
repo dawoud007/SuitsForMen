@@ -16,7 +16,12 @@ namespace ElectronicsShop_service.Models
         public DateTime CreationDate { get; set; }
 	}
 
-   
+    public class Worker
+    {
+        public int WorkerId { get; set; }
+        public string? WorkerName { get; set; }
+        public string? WhatToSee { get; set; }
+    }
 
 
 

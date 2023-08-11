@@ -18,8 +18,9 @@ namespace ElectronicsShop_service.Models
 		public string Description { get; set; }
 		public int NumberOfPieces { get; set; }
         public DateTime DateCreated { get; set; }
-
-        // Relationship: Each Bill contains multiple Cloth items
+		public string WorkerName { get; set; }
+		public int SellingPricee { get; set; }
+		public int ProfitDifference { get; set; }
         public ICollection<Cloth> Suits { get; set; }
 
 

@@ -135,7 +135,7 @@
 @code {
     private ClothSearchDto searchCriteria = new ClothSearchDto();
     private List<Cloth> cloths;
-    string Api_Uri = "http://localhost:5000/";
+  
     private async Task Search()
     {
         using var httpClient = new HttpClient();
@@ -153,7 +153,7 @@
             Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
         }
         // Make the POST request with the JSON content in the request body
-        var response = await Http.PostAsync(Api_Uri + "Cloth/Search", content);
+        var response = await Http.PostAsync(sharedStateService.Api_Uri + "Cloth/Search", content);
 
         if (response.IsSuccessStatusCode)
         {

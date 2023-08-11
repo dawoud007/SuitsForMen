@@ -46,12 +46,11 @@ builder.Services.AddIdentity<User, ApplicationRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider)
     .AddRoles<ApplicationRole>();
-builder.Services.AddValidatorsFromAssembly(typeof(CategoryValidations).Assembly);
+builder.Services.AddValidatorsFromAssembly(typeof(BillValidations).Assembly);
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 /*builder.Services.AddScoped<ITokenGenerator, GenerateJwtToken>();*/
 
-builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
-builder.Services.AddScoped<ICategoryUnitOfWork, CategoryBusiness>();
+
 
 
 //////////////////////////
@@ -61,8 +60,7 @@ builder.Services.AddScoped<IClothUnitOfWork, ClothBusiness>();
 builder.Services.AddScoped<IBillRepository, BillRepository>();
 builder.Services.AddScoped<IBillUnitOfWork, BillBusiness>();
 
-builder.Services.AddScoped<IStoreRepository, StoreRepository>();
-builder.Services.AddScoped<IStoreUnitOfWork, StoreBusiness>();
+
 
 
 
@@ -107,7 +105,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "Allowblazor",
         builder =>
     {
-         builder.WithOrigins("https://localhost:7040","http://localhost:5079")
+         builder.WithOrigins("*")
          .AllowAnyHeader() .AllowAnyMethod();
 
     });

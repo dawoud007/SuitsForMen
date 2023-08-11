@@ -3,13 +3,7 @@ using FluentValidation;
 
 namespace ElectronicsShop_service.Validations
 {
-    public class CategoryValidations : AbstractValidator<Category>
-    {
-        public CategoryValidations()
-        {
-
-        }
-    }
+   
 
 
 	public class ClothValidations : AbstractValidator<Cloth>
@@ -26,11 +20,12 @@ namespace ElectronicsShop_service.Validations
 
 		}
 	}
-	public class StoreValidations : AbstractValidator<Store>
-	{
-		public StoreValidations()
-		{
+    public class MoneyValidations : AbstractValidator<Money>
+    {
+        public MoneyValidations()
+        {
 
-		}
-	}
+        }
+    }
+
 }

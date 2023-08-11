@@ -16,10 +16,17 @@ namespace ElectronicsShop_service.Models
         public string? Role { get; set; }
         public string? WhatToSee { get; set; }
         public DateTime CreationDate { get; set; }
+
+        public List<Worker>? workUsers = new List<Worker>();
 	}
 
-   
 
+    public class Worker
+    {
+        public int WorkerId { get; set; }
+        public string? WorkerName { get; set; }
+        public string? WhatToSee { get; set; }
+    }
 
 
 }

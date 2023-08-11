@@ -133,7 +133,6 @@
     private List<GroupedStatistics> statistics;
     private GroupedStatistics mostSoldProduct;
     private string selectedPeriodType = "Month";
-    private string Api_Uri = "http://localhost:5000/";
 
     protected override async Task OnInitializedAsync()
     {
@@ -154,7 +153,7 @@
     {
         try
         {
-            var response = await Http.GetFromJsonAsync<ApiResponse>(Api_Uri + $"Bill/GetStatics?periodType={selectedPeriodType}");
+            var response = await Http.GetFromJsonAsync<ApiResponse>(sharedStateService.Api_Uri + $"Bill/GetStatics?periodType={selectedPeriodType}");
             statistics = response?.Statistics;
             mostSoldProduct = response?.MostSoldProduct;
         }

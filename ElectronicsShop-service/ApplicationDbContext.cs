@@ -9,12 +9,12 @@ public class ApplicationDbContext : DbContext
 {
 
 
-    public DbSet<Category>? Categories { get; set; }
     public DbSet<Cloth>? Clothes { get; set; }
     public DbSet<Bill>? Bills { get; set; }
-    public DbSet<Store>? Stors { get; set; }
     public DbSet<User>? Users { get; set; }
+    public DbSet<Money>? Moneys{ get; set; }
 
+    public DbSet<Worker>? ShopWorkers { get; set; }
 
 
 

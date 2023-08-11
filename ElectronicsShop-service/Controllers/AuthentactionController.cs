@@ -16,6 +16,7 @@ using Authentication.Infrastructure.Models;
 using Microsoft.Extensions.Options;
 using static ElectronicsShop_service.Controllers.AuthController;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace ElectronicsShop_service.Controllers;
 [ApiController]
@@ -26,14 +27,17 @@ public class AuthController : ControllerBase
     private readonly IConfiguration _configuration;
     private readonly RoleManager<ApplicationRole> _roleManager;
     private readonly UserManager<User> _userManager;
+    private readonly ApplicationDbContext _dbContext;
     /*	private readonly ITokenGenerator _tokenGenerator;*/
 
 
-    public AuthController(IConfiguration configuration, UserManager<User> userManager, RoleManager<ApplicationRole> roleManager)
+    public AuthController(IConfiguration configuration, UserManager<User> userManager, RoleManager<ApplicationRole> roleManager, ApplicationDbContext dbContext)
     {
         _configuration = configuration;
         _userManager = userManager;
         _roleManager = roleManager;
+        _dbContext = dbContext;
+        _dbContext = dbContext;
         /*	_tokenGenerator = tokenGenerator;*/
 
 
@@ -281,6 +285,72 @@ public class AuthController : ControllerBase
     }
 
 
+
+
+
+
+
+
+
+
+
+    [AllowAnonymous]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpPost("AddWorkersToShop")]
+    public async Task<IActionResult> AddWorkersToShop([FromBody] List<Worker>? workUsers)
+    {
+        var userNameClaim = User.FindFirst("Name")?.Value;
+        var userShopClaim = User.FindFirst("WhatToSee")?.Value;
+
+        var user = await _userManager.FindByNameAsync(userNameClaim);
+        if (user == null)
+        {
+            return NotFound("User not found.");
+        }
+     
+        foreach (var workerUsername in workUsers!)
+        {
+            var x=_dbContext.ShopWorkers!.Where(w=>w.WhatToSee==userShopClaim).ToList();
+            foreach(var u in x)
+            {
+                if (u.WorkerName == workerUsername.WorkerName) { return Ok("user alreay exists"); }
+                _dbContext.ShopWorkers!.Add(workerUsername);
+            }
+            if (x.Count ==0)
+            {
+                _dbContext.ShopWorkers!.Add(workerUsername);
+            }
+         
+
+        }
+        await _userManager.UpdateAsync(user);
+        _dbContext.SaveChanges();
+
+        return Ok("worker is added");
+
+            }
+
+    [AllowAnonymous]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpGet("GetWorkersToShop")]
+    public async Task<IActionResult> GetWorkersToShop()
+    {
+        var userNameClaim = User.FindFirst("Name")?.Value;
+        var userShopClaim = User.FindFirst("WhatToSee")?.Value;
+
+        var user = await _userManager.FindByNameAsync(userNameClaim);
+        if (user == null)
+        {
+            return NotFound("User not found.");
+        }
+        var workingUsers= _dbContext.ShopWorkers!.Where(w => w.WhatToSee == userShopClaim).ToList();
+
+        return Ok(workingUsers);
+    }
+
+
+
+
 }
 public class ChangeProfileModel
 {
@@ -310,4 +380,3 @@ public class UserInfoModel
     public string Role { get; set; }
     public string WhatToSee { get; set; }
 }
-

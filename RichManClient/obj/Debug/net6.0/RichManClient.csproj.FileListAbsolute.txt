@@ -945,6 +945,7 @@ C:\Users\Mo Dawoud\Desktop\RichManSuits\RichMan\RichManClient\obj\Debug\net6.0\b
 C:\Users\Mo Dawoud\Desktop\RichManSuits\RichMan\RichManClient\obj\Debug\net6.0\build-gz\D1AaI0LQ.gz
 C:\Users\Mo Dawoud\Desktop\RichManSuits\RichMan\RichManClient\obj\Debug\net6.0\build-gz\XC3sVsv7.gz
 C:\Users\Mo Dawoud\Desktop\RichManSuits\RichMan\RichManClient\obj\Debug\net6.0\build-gz\ZHYZXpC+.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\blazor.boot.json
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\blazor.webassembly.js
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\Chessie.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\cs\FSharp.Core.resources.dll
@@ -1006,6 +1007,8 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwr
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\Paket.Core.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\pl\FSharp.Core.resources.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\pt-BR\FSharp.Core.resources.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\RichManClient.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\RichManClient.pdb
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\ru\FSharp.Core.resources.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.AppContext.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Buffers.dll
@@ -1198,6 +1201,7 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwr
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Runtime.Serialization.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Net.Ping.dll.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\RichManClient.pdb.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Net.Sockets.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Private.Runtime.InteropServices.JavaScript.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Web.dll.gz
@@ -1312,6 +1316,7 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwr
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\dotnet.timezones.blat.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Security.Claims.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Diagnostics.FileVersionInfo.dll.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\RichManClient.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Security.Cryptography.X509Certificates.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Diagnostics.TraceSource.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Xml.XPath.dll.gz
@@ -1405,11 +1410,6 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwr
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Globalization.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.Dynamic.Runtime.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\System.IO.Compression.FileSystem.dll.gz
-C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\blazor.boot.json
-C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\RichManClient.dll
-C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\RichManClient.pdb
-C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\RichManClient.pdb.gz
-C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\RichManClient.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\RichManClient.staticwebassets.runtime.json
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\RichManClient.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\RichManClient.pdb

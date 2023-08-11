@@ -81,6 +81,11 @@
     {
         <div class=>
             <div class="col-md-12">
+
+                 <div class="row">
+                    <div class="col-md-6 table-label">hsl hgfhzu</div>
+                    <div class="col-md-6 table-value font-weight-bold">@bill.WorkerName</div>
+                </div>
                 <div class="row">
                     <div class="col-md-6 table-label">اسم المشتري</div>
                     <div class="col-md-6 table-value font-weight-bold">@bill.BuyerName</div>
@@ -93,11 +98,18 @@
                     <div class="col-md-6 table-label">تفاصيل العملية</div>
                     <div class="col-md-6 table-value font-weight-bold">@bill.Description</div>
                 </div>
-          
+                <div class="row">
+                    <div class="col-md-6 table-label">سعر البيع</div>
+                    <div class="col-md-6 table-value font-weight-bold">@bill.SellingPricee</div>
+                </div>
                 <div class="row">
                     <div class="col-md-6 table-label">تاريخ الانشاء</div>
                     <div class="col-md-6 table-value font-weight-bold">@bill.DateCreated</div>
                 </div>
+
+             
+
+               
                
             </div>
 
@@ -116,7 +128,7 @@
                                     <th>عدد القطع</th>
                                     <th>اسم المحل</th>
                                     <th>تاريخ الفاتورة</th>
-                                    <th>ملاحظة</th>
+                          
                                 </tr>
                             </thead>
                             <tbody>
@@ -130,7 +142,7 @@
                                         <td>@cloth.NumOfPieces</td>
                                         <td>@cloth.StoreName</td>
                                         <td>@cloth.DateCreated</td>
-                                        <td>@cloth.Note</td>
+                                       
                                     </tr>
                                 }
                             </tbody>
@@ -153,7 +165,7 @@
     private List<ClothDto> billCloth = new List<ClothDto>();
 
 
-    string Api_Uri = "http://localhost:5000/";
+   
     protected override async Task OnInitializedAsync()
     {
         // Get the JWT token from the AuthService
@@ -168,7 +180,7 @@
         // Make the API call to get the bill details
         try
         {
-            bill = await Http.GetFromJsonAsync<BillDto>(Api_Uri +$"Bill/GetBillById?id={billId}");
+            bill = await Http.GetFromJsonAsync<BillDto>(sharedStateService.Api_Uri + $"Bill/GetBillById?id={billId}");
         }
         catch (Exception ex)
         {
@@ -177,7 +189,7 @@
         }
         try
         {
-            cloths = await Http.GetFromJsonAsync<List<ClothDto>>(Api_Uri + "Cloth/GetAll")!;
+            cloths = await Http.GetFromJsonAsync<List<ClothDto>>(sharedStateService.Api_Uri! + "Cloth/GetAll")!;
             billCloth = cloths.Where(c => c.BillId == bill.Id).ToList();
         }
         catch (Exception ex)

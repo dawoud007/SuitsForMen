@@ -56,7 +56,6 @@
     {
         // Get the JWT token from the AuthService
         var token = await AuthService.GetAccessTokenAsync();
-        string Api_Uri = "http://localhost:5000/";
         // Set the authorization header for the HttpClient
         if (!string.IsNullOrEmpty(token))
         {
@@ -66,7 +65,7 @@
         // Make the API call to get the cloth detail
         try
         {
-            cloth = await Http.GetFromJsonAsync<Cloth>(Api_Uri + "Cloth/Get/" + ClothId);
+            cloth = await Http.GetFromJsonAsync<Cloth>(sharedStateService.Api_Uri + "Cloth/Get/" + ClothId);
           
         }
         catch (Exception ex)

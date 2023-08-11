@@ -27,11 +27,15 @@ public class BillController : MyBaseController<Bill, BillDto>
 {
 	private readonly IBillRepository _billRepository;
 	private readonly IClothRepository _clothRepository;
-	public BillController(IBillRepository billRepository, IClothRepository clothRepository, IBillUnitOfWork unitOfWork, IMapper mapper, IValidator<Bill> validator) : base(unitOfWork, mapper, validator)
+    private readonly ApplicationDbContext _dbContext;
+    public BillController(IBillRepository billRepository, IClothRepository clothRepository,
+        IBillUnitOfWork unitOfWork, IMapper mapper,
+        IValidator<Bill> validator, ApplicationDbContext dbContext) : base(unitOfWork, mapper, validator)
 	{
 		_billRepository = billRepository;
 		_clothRepository = clothRepository;
-	}
+        _dbContext = dbContext;
+    }
 
     [Authorize(AuthenticationSchemes = "Bearer")]
 	[HttpGet]
@@ -39,14 +43,14 @@ public class BillController : MyBaseController<Bill, BillDto>
 	{
         var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
 
-        var results = await _billRepository.GetAllAsync();
-        var filteredBillData = results.Where(c => c.SellerName == whatToSeeValue);
-        if(!filteredBillData.Any())
+  
+
+        var ShopBills = (await _billRepository.Get(b => b.SellerName == whatToSeeValue)).ToList();
+        if (!ShopBills.Any())
         {
             return Ok("no bills for this shop");
         }
-
-        foreach (var bill in filteredBillData)
+        foreach (var bill in ShopBills)
 		{
 			var thing = (await _clothRepository.Get(c => c.BillId == bill.Id)).ToList();
 			bill.Suits = thing;
@@ -54,7 +58,7 @@ public class BillController : MyBaseController<Bill, BillDto>
 
 
 		}
-		return Ok(filteredBillData);
+		return Ok(ShopBills);
 	}
 
 
@@ -133,9 +137,9 @@ public class BillController : MyBaseController<Bill, BillDto>
 		{
 			return BadRequest(ModelState);
 		}
-
+    
+        int TotalSellingPrice=0;
 		var list=new List<Cloth>();
-		int WarningToNumberOfPieces=0;
 
 		
 		foreach(var suit in billDto.Suits!)
@@ -146,36 +150,39 @@ public class BillController : MyBaseController<Bill, BillDto>
 		}
 		var bill = new Bill
 		{
-			BuyerName = billDto.BuyerName,
-			SellerName = billDto.SellerName,
-			Description = billDto.Description!,
-			DateCreated=DateTime.Now,
-			Suits= list
-		};
+            WorkerName = billDto.WorkerName,
+            BuyerName = billDto.BuyerName!,
+            SellerName = billDto.SellerName,
+            Description = billDto.Description!,
+            SellingPricee = billDto.SellingPricee,
+            DateCreated = DateTime.Now,
+            Suits = list,
+
+        };
 
 		try
 		{
-			await _billRepository.AddAsync(bill);
 
-			if (billDto.Suits != null && billDto.Suits.Any())
+            await _billRepository.AddAsync(bill);
+            if (billDto.Suits != null && billDto.Suits.Any())
 			{
                 foreach (var suitDto in billDto.Suits)
                 {
-
+                  
                     suitDto.StoreName = billDto.SellerName;
+                   
 
                     var suits = await FindSuitWithFeatures(suitDto!);
+                  
+                        TotalSellingPrice += suits.Gomla;
+                    
 					if (suitDto != null)
 					{
 						if (suitDto.NumOfPieces <= suits.NumOfPieces)
 						{
 							suits.NumOfPieces -=suitDto.NumOfPieces;
-						/*	if (suits.NumOfPieces <= billDto.limit)
-							{
-								WarningToNumberOfPieces=suitDto.NumOfPieces;
-							}*/
-							
-						}
+                        
+                        }
 						else
 						{
 							return BadRequest($"Not enough suits available with Size: {suitDto.Size}, Color: {suitDto.Color}, Type: {suitDto.type}");
@@ -187,17 +194,10 @@ public class BillController : MyBaseController<Bill, BillDto>
 					}
 				}
 			}
+            bill.ProfitDifference = (bill.SellingPricee - TotalSellingPrice);
+            await _billRepository.Save();
 
-			await _billRepository.Save();
-
-		/*	if (WarningToNumberOfPieces > 0)
-			{
-				var addBillWithAmountWarning=bill.Adapt<BillDto>();
-				addBillWithAmountWarning.WarningToNumberOfPieces = $"warning only {billDto.limit} pieces";
-
-
-                return Ok(addBillWithAmountWarning);
-			}*/
+		
 			return Ok(bill);
 		}
 		catch (Exception ex)
@@ -300,24 +300,161 @@ public class BillController : MyBaseController<Bill, BillDto>
 
 
 
-    public class GroupedStatistics
+
+
+
+
+
+
+
+
+
+    [HttpPost("add-money")]
+    public async Task<IActionResult> AddMoneyToAccount([FromBody] MoneyUpdateDto moneyUpdateDto)
     {
-        public string Name { get; set; }
-        public string Color { get; set; }
-        public int Size { get; set; }
-        public int TotalPieces { get; set; }
-        public string Label { get; set; }
+        if (moneyUpdateDto == null)
+        {
+            return BadRequest("Invalid data");
+        }
+
+        // Retrieve or create the Money record
+        var money = await _dbContext.Moneys.FirstOrDefaultAsync();
+        if (money == null)
+        {
+            money = new Money(); // Create a new Money instance with default values
+            money.ShopName= moneyUpdateDto.ShopName;
+            _dbContext.Moneys.Add(money); // Add it to the database context
+        }
+
+        if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
+        {
+            money.AddMoneyToBox(moneyUpdateDto.Amount);
+        }
+        else if (moneyUpdateDto.AccountType == MoneyAccountType.Visa)
+        {
+            money.AddMoneyToVisa(moneyUpdateDto.Amount);
+        }
+        else
+        {
+            return BadRequest("Invalid account type");
+        }
+
+        await _dbContext.SaveChangesAsync();
+
+        return Ok("Money added successfully");
+    }
+
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpDelete("delete-money")]
+    public async Task<IActionResult> DeleteMoneyFromAccount([FromBody] MoneyUpdateDto moneyUpdateDto)
+    {
+        var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+        if (moneyUpdateDto == null)
+        {
+            return BadRequest("Invalid data");
+        }
+
+        var money = _dbContext.Moneys!.Where(m => m.ShopName == whatToSeeValue).FirstOrDefault(); // Adjust as needed
+
+
+        if (money == null)
+        {
+            return NotFound("Money data not found");
+        }
+
+        if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
+        {
+            money.RemoveMoneyFromBox(moneyUpdateDto.Amount);
+        }
+        else if (moneyUpdateDto.AccountType == MoneyAccountType.Visa)
+        {
+            money.RemoveMoneyFromVisa(moneyUpdateDto.Amount);
+        }
+        else
+        {
+            return BadRequest("Invalid account type");
+        }
+
+        await _dbContext.SaveChangesAsync();
+
+        return Ok("Money deleted successfully");
+    }
+
+    [HttpPut("update-money")]
+    public async Task<IActionResult> UpdateMoneyInAccount([FromBody] MoneyUpdateDto moneyUpdateDto)
+    {
+        if (moneyUpdateDto == null)
+        {
+            return BadRequest("Invalid data");
+        }
+
+        var money = await _dbContext.Moneys!.FirstOrDefaultAsync(); // Adjust as needed
+
+        if (money == null)
+        {
+            return NotFound("Money data not found");
+        }
+
+        if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
+        {
+            money.UpdateMoneyInBox(moneyUpdateDto.Amount);
+        }
+        else if (moneyUpdateDto.AccountType == MoneyAccountType.Visa)
+        {
+            money.UpdateMoneyInVisa(moneyUpdateDto.Amount);
+        }
+        else
+        {
+            return BadRequest("Invalid account type");
+        }
+
+        await _dbContext.SaveChangesAsync();
+
+        return Ok("Money updated successfully");
     }
 
 
 
-    public enum PeriodType
-    {
-        Month,
-        Week
-    }
+
+
+
+
+
+
+
+
+
 
 
 }
 
 
+public class GroupedStatistics
+{
+    public string Name { get; set; }
+    public string Color { get; set; }
+    public int Size { get; set; }
+    public int TotalPieces { get; set; }
+    public string Label { get; set; }
+}
+
+
+
+public enum PeriodType
+{
+    Month,
+    Week
+}
+
+public class MoneyUpdateDto
+{
+    public MoneyAccountType AccountType { get; set; }
+    public int Amount { get; set; }
+    public string ShopName { get; set; }
+}
+
+public enum MoneyAccountType
+{
+    Box,
+    Visa
+}

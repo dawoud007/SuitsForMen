@@ -58,8 +58,7 @@ else
    
     private List<BillDto> bills = new List<BillDto>();
     private BillDto selectedBill;
-    string Api_Uri = "http://localhost:5000/";
-
+   
 
     protected override async Task OnInitializedAsync()
     {
@@ -76,7 +75,7 @@ else
         try
         {
 
-            bills = await Http.GetFromJsonAsync<List<BillDto>>(Api_Uri + "Bill/GetAll")!;
+            bills = await Http.GetFromJsonAsync<List<BillDto>>(sharedStateService.Api_Uri + "Bill/GetAll")!;
         }
         catch (Exception ex)
         {
@@ -102,7 +101,7 @@ else
     private async Task DeleteBill(BillDto bill)
     {
         HttpClient httpClient = new HttpClient();
-        var response = await httpClient.DeleteAsync(Api_Uri + "Bill/Delete/" + bill.Id);
+        var response = await httpClient.DeleteAsync(sharedStateService.Api_Uri + "Bill/Delete/" + bill.Id);
 
         if (response.IsSuccessStatusCode)
         {

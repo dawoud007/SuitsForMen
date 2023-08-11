@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ElectronicsShop_service.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230806141754_updateCloths")]
-    partial class updateCloths
+    [Migration("20230811134814_addModels")]
+    partial class addModels
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -49,7 +49,7 @@ namespace ElectronicsShop_service.Migrations
                         new
                         {
                             Id = "1",
-                            ConcurrencyStamp = "7393bb5a-1074-4d2f-95ed-105f2531a667",
+                            ConcurrencyStamp = "18e1e86d-2277-44b9-aaa2-92f53653fae7",
                             Name = "Admin",
                             NormalizedName = "ADMIN",
                             userId = 1
@@ -57,7 +57,7 @@ namespace ElectronicsShop_service.Migrations
                         new
                         {
                             Id = "2",
-                            ConcurrencyStamp = "2b6a6610-8810-41f2-aff6-0479d348620c",
+                            ConcurrencyStamp = "171d45dc-eb0a-414c-8b20-0a172cd001ad",
                             Name = "User",
                             NormalizedName = "USER",
                             userId = 2
@@ -87,34 +87,23 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<int>("NumberOfPieces")
                         .HasColumnType("int");
 
+                    b.Property<int>("ProfitDifference")
+                        .HasColumnType("int");
+
                     b.Property<string>("SellerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SellingPricee")
+                        .HasColumnType("int");
+
+                    b.Property<string>("WorkerName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Bills");
-                });
-
-            modelBuilder.Entity("ElectronicsShop_service.Models.Category", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("DisplayOrder")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("ElectronicsShop_service.Models.Cloth", b =>
@@ -136,6 +125,9 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("Gomla")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -149,12 +141,11 @@ namespace ElectronicsShop_service.Migrations
                     b.Property<int>("Size")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("StoreId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("StoreName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("limit")
+                        .HasColumnType("int");
 
                     b.Property<string>("type")
                         .HasColumnType("nvarchar(max)");
@@ -163,26 +154,30 @@ namespace ElectronicsShop_service.Migrations
 
                     b.HasIndex("BillId");
 
-                    b.HasIndex("StoreId");
-
                     b.ToTable("Clothes");
                 });
 
-            modelBuilder.Entity("ElectronicsShop_service.Models.Store", b =>
+            modelBuilder.Entity("ElectronicsShop_service.Models.Money", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("CreationDate")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
-                    b.Property<string>("Name")
+                    b.Property<int>("MoneyInBox")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MoneyInVisa")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ShopName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("id");
 
-                    b.ToTable("Stors");
+                    b.ToTable("Moneys");
                 });
 
             modelBuilder.Entity("ElectronicsShop_service.Models.User", b =>
@@ -258,20 +253,39 @@ namespace ElectronicsShop_service.Migrations
                         {
                             Id = 50,
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b6fb14c4-c571-44f2-b96c-4ec6752532ec",
-                            CreationDate = new DateTime(2023, 8, 6, 16, 17, 54, 108, DateTimeKind.Local).AddTicks(983),
+                            ConcurrencyStamp = "1e7c171b-5ce0-412e-84cc-f2768077c4aa",
+                            CreationDate = new DateTime(2023, 8, 11, 15, 48, 14, 563, DateTimeKind.Local).AddTicks(6418),
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedUserName = "REDA",
                             Password = "Reda12@",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAWpmgshopUav/RYmIQlyugIxzXGSY1FSjIwjdlleyFIf1LO1+hgAz///9B7BykgRQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAENImlje3AjuwtrtlMUtP+HYioEtjZa98yBlXtX8zyFhEsoekiTkUFUu0qWzCIq8w/w==",
                             PhoneNumberConfirmed = false,
                             Role = "Admin",
-                            SecurityStamp = "5faf9439-8237-455b-838f-ab160e3edc6c",
+                            SecurityStamp = "6be07e99-c0c3-46bc-a25c-54543cfd078f",
                             TwoFactorEnabled = false,
                             UserName = "reda",
                             WhatToSee = "shop1"
                         });
+                });
+
+            modelBuilder.Entity("ElectronicsShop_service.Models.Worker", b =>
+                {
+                    b.Property<int>("WorkerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("WorkerId"), 1L, 1);
+
+                    b.Property<string>("WhatToSee")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("WorkerName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("WorkerId");
+
+                    b.ToTable("ShopWorkers");
                 });
 
             modelBuilder.Entity("ElectronicsShop_service.Models.Cloth", b =>
@@ -279,20 +293,11 @@ namespace ElectronicsShop_service.Migrations
                     b.HasOne("ElectronicsShop_service.Models.Bill", null)
                         .WithMany("Suits")
                         .HasForeignKey("BillId");
-
-                    b.HasOne("ElectronicsShop_service.Models.Store", null)
-                        .WithMany("StoredSuits")
-                        .HasForeignKey("StoreId");
                 });
 
             modelBuilder.Entity("ElectronicsShop_service.Models.Bill", b =>
                 {
                     b.Navigation("Suits");
-                });
-
-            modelBuilder.Entity("ElectronicsShop_service.Models.Store", b =>
-                {
-                    b.Navigation("StoredSuits");
                 });
 #pragma warning restore 612, 618
         }

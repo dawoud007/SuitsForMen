@@ -12,17 +12,19 @@ namespace ElectronicsShop_service.Models
 
         public Guid Id { get; set; }
 
-        public DateTime DateCreated { get; set; } = DateTime.Now;
         public string BuyerName { get; set; }
-		public string SellerName { get; set; }
-		public string Description { get; set; }
-		public int NumberOfPieces { get; set; }
+        public string SellerName { get; set; }
+        public string Description { get; set; }
+        public int NumberOfPieces { get; set; }
+        public DateTime DateCreated { get; set; }
+        public string WorkerName { get; set; }
+        public int SellingPricee { get; set; }
+        public int ProfitDifference { get; set; }
+        public ICollection<Cloth> Suits { get; set; }
 
-		// Relationship: Each Bill contains multiple Cloth items
-		public ICollection<Cloth> Suits { get; set; }
 
 
 
 
-	}
+    }
 }

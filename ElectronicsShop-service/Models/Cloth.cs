@@ -23,7 +23,7 @@ namespace ElectronicsShop_service.Models
 		public string? StoreName { get; set; }
 
         public int? limit { get; set; } = 10;
-		public int?Gomla { get; set; }
+		public int Gomla { get; set; }
         public DateTime DateCreated { get; set; }= DateTime.Now;
         public string? Note { get; set; } = "";
 

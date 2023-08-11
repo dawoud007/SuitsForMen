@@ -139,7 +139,6 @@
 @code {
     private List<ClothDto> cloths = new List<ClothDto>();
     private Guid selectedClothId = Guid.Empty;
-    string Api_Uri = "http://localhost:5000/";
 
     protected override async Task OnInitializedAsync()
     {
@@ -155,7 +154,7 @@
         // Make the API call
         try
         {
-            cloths = await Http.GetFromJsonAsync<List<ClothDto>>(Api_Uri + "Cloth/GetAll")!;
+            cloths = await Http.GetFromJsonAsync<List<ClothDto>>(sharedStateService.Api_Uri + "Cloth/GetAll")!;
         }
         catch (Exception ex)
         {
@@ -172,7 +171,7 @@
     private async Task DeleteCloth(ClothDto cloth)
     {
         HttpClient httpClient = new HttpClient();
-        var response = await httpClient.DeleteAsync(Api_Uri + "Cloth/Delete/" + cloth.Id);
+        var response = await httpClient.DeleteAsync(sharedStateService.Api_Uri + "Cloth/Delete/" + cloth.Id);
 
         if (response.IsSuccessStatusCode)
         {
