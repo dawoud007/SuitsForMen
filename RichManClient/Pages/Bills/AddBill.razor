@@ -121,7 +121,13 @@
             </div>
             <div class="form-group">
                 <label>اسم العامل</label>
-                <input type="text" class="form-control" @bind="@newBill.WorkerName" />
+                <select class="form-control" @onclick="FetchWorkers" @bind="@newBill.WorkerName">
+                    <option value="">اختر العامل</option>
+                    @foreach (var worker in Workers)
+                    {
+                        <option value="@worker.WorkerName">@worker.WorkerName</option>
+                    }
+                </select>
             </div>
 
         </div>
@@ -172,8 +178,22 @@
     private BillDto newBill = new BillDto();
     private bool isBillAdded = false;
     private string? errorMessage;
+    private List<Worker> Workers { get; set; } = new List<Worker>();
+
+    private async Task FetchWorkers()
+    {
+        try
+        {
+            Workers = await Http.GetFromJsonAsync<List<Worker>>(sharedStateService.Api_Uri + "Auth/GetWorkersToShop");
+        }
+        catch (Exception ex)
+        {
+            // Handle API call errors
+        }
+    }
 
 
+ 
 
     // Method to add a new Cloth object to the bill
     private void AddNewCloth()
