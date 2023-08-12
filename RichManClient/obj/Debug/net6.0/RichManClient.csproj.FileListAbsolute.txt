@@ -945,6 +945,12 @@ C:\Users\Mo Dawoud\Desktop\RichManSuits\RichMan\RichManClient\obj\Debug\net6.0\b
 C:\Users\Mo Dawoud\Desktop\RichManSuits\RichMan\RichManClient\obj\Debug\net6.0\build-gz\D1AaI0LQ.gz
 C:\Users\Mo Dawoud\Desktop\RichManSuits\RichMan\RichManClient\obj\Debug\net6.0\build-gz\XC3sVsv7.gz
 C:\Users\Mo Dawoud\Desktop\RichManSuits\RichMan\RichManClient\obj\Debug\net6.0\build-gz\ZHYZXpC+.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\Newtonsoft.Json.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\NuGet.Frameworks.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\Paket.Core.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\System.Private.CoreLib.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\Ocfetp+H.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\iraYzZGs.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\blazor.boot.json
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\blazor.webassembly.js
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\wwwroot\_framework\Chessie.dll
@@ -1444,13 +1450,10 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\Mono
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\Mono.Cecil.Pdb.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\Mono.Cecil.Rocks.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\Mono.Cecil.dll
-C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\NuGet.Common.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\NuGet.Configuration.dll
-C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\NuGet.Frameworks.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\NuGet.Packaging.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\NuGet.Versioning.dll
-C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\Paket.Core.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\System.IO.Pipelines.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\System.Net.Http.WinHttpHandler.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\System.Security.Cryptography.Pkcs.dll
@@ -1634,7 +1637,6 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\Syst
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\WindowsBase.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\mscorlib.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\netstandard.dll
-C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\System.Private.CoreLib.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\dotnet.js
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\dotnet.timezones.blat
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Debug\net6.0\dotnet.wasm
@@ -1840,7 +1842,6 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\buil
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\NCdlX0rM.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\j+Jh2TeO.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\fcCKPLk2.gz
-C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\Ocfetp+H.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\JVu2xAZ0.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\+iu6MF70.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\zM5UAyeK.gz
@@ -1872,7 +1873,6 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\buil
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\8KzRl3hP.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\zLmmXH8C.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\ohuTNji+.gz
-C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\iraYzZGs.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\q6ZvQ34S.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\4dCF6nnH.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Debug\net6.0\build-gz\o93ENioJ.gz
