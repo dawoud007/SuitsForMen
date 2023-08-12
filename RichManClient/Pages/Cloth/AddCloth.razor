@@ -109,7 +109,6 @@
 @code {
     private ClothDto newCloth = new ClothDto();
     private bool isClothAdded = false;
-    string Api_Uri = "http://localhost:5000/";
     private async Task AddNewCloth()
     {
         // The rest of the code for adding the cloth remains the same as before.
@@ -129,7 +128,7 @@
         {
             Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
         }
-        var response = await Http.PostAsJsonAsync(Api_Uri + "Cloth/PostCloth", newCloth);
+        var response = await Http.PostAsJsonAsync(sharedStateService.Api_Uri + "Cloth/PostCloth", newCloth);
 
         if (response.IsSuccessStatusCode)
         {

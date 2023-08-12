@@ -83,6 +83,7 @@
                             <th>اللون</th>
                             <th>المقاس</th>
                             <th>العدد الكلي</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
@@ -93,6 +94,8 @@
                                 <td>@stat.Color</td>
                                 <td>@stat.Size</td>
                                 <td>@stat.TotalPieces</td>
+                                <td>@stat.TotalProfits</td>
+                             
                             </tr>
                         }
                     </tbody>
@@ -100,6 +103,14 @@
             </div>
             @if (mostSoldProduct != null)
             {
+                 <div class="col-md-12">
+                    <h4 class="text-center">صافي الربح</h4>
+                    <div class="card">
+                        <div class="card-body">
+                            <strong>@TotalProfits</strong>
+                        </div>
+                    </div>
+                </div>
                 <div class="col-md-12">
                     <h4 class="text-center">اكثر العناصر مبيعا</h4>
                     <div class="card">
@@ -127,12 +138,14 @@
         public string Color { get; set; }
         public int Size { get; set; }
         public int TotalPieces { get; set; }
+        public int TotalProfits { get; set; }
         public string Label { get; set; }
     }
 
     private List<GroupedStatistics> statistics;
     private GroupedStatistics mostSoldProduct;
     private string selectedPeriodType = "Month";
+    int TotalProfits = new int();
 
     protected override async Task OnInitializedAsync()
     {
@@ -154,8 +167,9 @@
         try
         {
             var response = await Http.GetFromJsonAsync<ApiResponse>(sharedStateService.Api_Uri + $"Bill/GetStatics?periodType={selectedPeriodType}");
-            statistics = response?.Statistics;
-            mostSoldProduct = response?.MostSoldProduct;
+            statistics = response?.Statistics!;
+            mostSoldProduct = response?.MostSoldProduct!;
+            TotalProfits = statistics.FirstOrDefault()!.TotalProfits;
         }
         catch (Exception ex)
         {

@@ -215,13 +215,13 @@
       "mscorlib.dll": "sha256-mvS0gmCEk3NPPJPuIX5UWyIRyNxQ4WYYES39CBT9CK0=",
       "netstandard.dll": "sha256-6NXprR7wyUZxpdXxaSPHSoC5uOL5UCc7bsZG3TSuVxE=",
       "System.Private.CoreLib.dll": "sha256-igtwZSR0\/lrbmwL\/XiTsEkIeSL+736GHTZPReYguZCQ=",
-      "RichManClient.dll": "sha256-dalO7mH2CJpJ\/WBaHgWoWJVcJXnjINhwHreClahexDo="
+      "RichManClient.dll": "sha256-Nao+PeDj1niMtxiXc4eStdL6VErGTg\/CMqadT2oDPQk="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "RichManClient.pdb": "sha256-Gg7\/9aSVkg6HKFG4w4243wHKMlhawRRqb83QZ+QpRBM="
+      "RichManClient.pdb": "sha256-gJnPYYBMz++pshxiwNUT5SmBqgRCuFfh7usV3McMf2w="
     },
     "runtime": {
       "dotnet.6.0.14.duijk1207n.js": "sha256-54cJ6JdGhGbKaLWxHfRYzYbuyRq2wlK\/ZDzfSXD3FEs=",

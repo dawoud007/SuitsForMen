@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
@@ -196,9 +197,16 @@ public class BillController : MyBaseController<Bill, BillDto>
 			}
             bill.ProfitDifference = (bill.SellingPricee - TotalSellingPrice);
             await _billRepository.Save();
+            MoneyUpdateDto AddToSAve = new MoneyUpdateDto
+            {
+                AccountType = billDto.AccountType,
+                Amount = bill.SellingPricee,
+                ShopName = whatToSeeValue
+            };
+            AddMoneyFromBillAdding(AddToSAve);
 
-		
-			return Ok(bill);
+
+            return Ok(bill);
 		}
 		catch (Exception ex)
 		{
@@ -233,6 +241,10 @@ public class BillController : MyBaseController<Bill, BillDto>
             var firstDayOfMonth = currentDate.AddDays(1 - currentDate.Day).Date;
             var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
+            var ProfitsInMonth = (await _billRepository.Get(c =>
+                c.DateCreated >= firstDayOfMonth && c.DateCreated <= lastDayOfMonth && c.SellerName == whatToSeeClaim,
+                null,
+                "")).ToList().Sum(b=>b.ProfitDifference);
             var monthlyStatistics = (await _clothRepository.Get(c =>
                 c.DateCreated >= firstDayOfMonth && c.DateCreated <= lastDayOfMonth && c.BillId != null&&c.StoreName==whatToSeeClaim,
                 null,
@@ -246,7 +258,8 @@ public class BillController : MyBaseController<Bill, BillDto>
                     Name = groupedCloth.Key.Name,
                     Color = groupedCloth.Key.Color,
                     Size = groupedCloth.Key.Size,
-                    TotalPieces = groupedCloth.Sum(cloth => cloth.NumOfPieces)
+                    TotalPieces = groupedCloth.Sum(cloth => cloth.NumOfPieces),
+                    TotalProfits= ProfitsInMonth
                 })
                 .ToList();
 
@@ -266,6 +279,11 @@ public class BillController : MyBaseController<Bill, BillDto>
             var lastDayOfWeek = currentDate;
             var firstDayOfWeek = currentDate.AddDays(-6);
 
+
+            var ProfitsInWeek = (await _billRepository.Get(c =>
+              c.DateCreated >= firstDayOfWeek && c.DateCreated <= lastDayOfWeek && c.SellerName == whatToSeeClaim,
+              null,
+              "")).ToList().Sum(b => b.ProfitDifference);
             var weeklyStatistics = (await _clothRepository.Get(c =>
                 c.DateCreated >= firstDayOfWeek && c.DateCreated <= lastDayOfWeek && c.BillId != null&& c.StoreName == whatToSeeClaim,
                 null,
@@ -279,7 +297,8 @@ public class BillController : MyBaseController<Bill, BillDto>
                     Name = groupedCloth.Key.Name,
                     Color = groupedCloth.Key.Color,
                     Size = groupedCloth.Key.Size,
-                    TotalPieces = groupedCloth.Sum(cloth => cloth.NumOfPieces)
+                    TotalPieces = groupedCloth.Sum(cloth => cloth.NumOfPieces),
+                    TotalProfits= ProfitsInWeek
                 })
                 .ToList();
 
@@ -307,7 +326,7 @@ public class BillController : MyBaseController<Bill, BillDto>
 
 
 
-
+    [Authorize(AuthenticationSchemes = "Bearer")]
 
     [HttpPost("add-money")]
     public async Task<IActionResult> AddMoneyToAccount([FromBody] MoneyUpdateDto moneyUpdateDto)
@@ -318,12 +337,13 @@ public class BillController : MyBaseController<Bill, BillDto>
         }
 
         // Retrieve or create the Money record
-        var money = await _dbContext.Moneys.FirstOrDefaultAsync();
+        var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+        var money = _dbContext.Moneys!.Where(m => m.ShopName == whatToSeeValue).FirstOrDefault(); // Adjust as needed
         if (money == null)
         {
             money = new Money(); // Create a new Money instance with default values
             money.ShopName= moneyUpdateDto.ShopName;
-            _dbContext.Moneys.Add(money); // Add it to the database context
+            _dbContext.Moneys!.Add(money); // Add it to the database context
         }
 
         if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
@@ -349,6 +369,7 @@ public class BillController : MyBaseController<Bill, BillDto>
     public async Task<IActionResult> DeleteMoneyFromAccount([FromBody] MoneyUpdateDto moneyUpdateDto)
     {
         var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+      
         if (moneyUpdateDto == null)
         {
             return BadRequest("Invalid data");
@@ -380,28 +401,156 @@ public class BillController : MyBaseController<Bill, BillDto>
         return Ok("Money deleted successfully");
     }
 
-    [HttpPut("update-money")]
-    public async Task<IActionResult> UpdateMoneyInAccount([FromBody] MoneyUpdateDto moneyUpdateDto)
-    {
-        if (moneyUpdateDto == null)
-        {
-            return BadRequest("Invalid data");
-        }
 
-        var money = await _dbContext.Moneys!.FirstOrDefaultAsync(); // Adjust as needed
+ 
+
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpGet("get-money")]
+    public IActionResult GetMoney()
+    {
+        var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+        var money = _dbContext.Moneys!.Where(m => m.ShopName == whatToSeeValue).FirstOrDefault(); // Adjust as needed
 
         if (money == null)
         {
             return NotFound("Money data not found");
         }
 
+        var moneyData = new
+        {
+            MoneyInBox = money.MoneyInBox,   // Assuming you have a property MoneyInBox in your Money class
+            MoneyInVisa = money.MoneyInVisa  // Assuming you have a property MoneyInVisa in your Money class
+        };
+
+        return Ok(moneyData);
+    }
+
+
+
+
+    /*
+        [Authorize(AuthenticationSchemes = "Bearer")]
+        [HttpGet]
+        public async Task<IActionResult> GetStaticsBasedOnBill(PeriodType periodType)
+        {
+            List<Cloth> suits = new();
+            var whatToSeeClaim = User.FindFirst("WhatToSee")?.Value;
+
+            var currentDate = DateTime.Now;
+
+            if (periodType == PeriodType.Month)
+            {
+                var firstDayOfMonth = currentDate.AddDays(1 - currentDate.Day).Date;
+                var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+
+                var monthlyStatistics = (await _billRepository.Get(c =>
+                    c.DateCreated >= firstDayOfMonth && c.DateCreated <= lastDayOfMonth && c.SellerName == whatToSeeClaim,
+                    null,
+                    "")).ToList();
+              foreach(var bill in monthlyStatistics)
+                {
+
+                    bill.Suits.ToList();
+                    suits.AddRange(bill.Suits); 
+                }
+
+                var groupedMonthlyStatistics = suits
+                    .GroupBy(cloth => new { cloth.Name, cloth.Color, cloth.Size })
+                    .Select(groupedCloth => new GroupedStatistics
+                    {
+                        Name = groupedCloth.Key.Name,
+                        Color = groupedCloth.Key.Color,
+                        Size = groupedCloth.Key.Size,
+                        TotalPieces = groupedCloth.Sum(cloth => cloth.NumOfPieces),
+                        TotalProfits =groupedCloth.Sum(cloth => cloth.NumOfPieces),
+                    })
+                    .ToList();
+
+                var mostSoldProduct = groupedMonthlyStatistics
+                    .OrderByDescending(stat => stat.TotalPieces)
+                    .FirstOrDefault();
+
+                if (mostSoldProduct != null)
+                {
+                    mostSoldProduct.Label = "Most Sold";
+                }
+
+                return Ok(new { Statistics = groupedMonthlyStatistics, MostSoldProduct = mostSoldProduct });
+            }
+            else if (periodType == PeriodType.Week)
+            {
+                var lastDayOfWeek = currentDate;
+                var firstDayOfWeek = currentDate.AddDays(-6);
+
+
+                var ProfitsInWeek = (await _billRepository.Get(c =>
+                  c.DateCreated >= firstDayOfWeek && c.DateCreated <= lastDayOfWeek && c.SellerName == whatToSeeClaim,
+                  null,
+                  "")).ToList().Sum(b => b.ProfitDifference);
+                var weeklyStatistics = (await _clothRepository.Get(c =>
+                    c.DateCreated >= firstDayOfWeek && c.DateCreated <= lastDayOfWeek && c.BillId != null && c.StoreName == whatToSeeClaim,
+                    null,
+                    ""))
+                    .ToList();
+
+                var groupedWeeklyStatistics = weeklyStatistics
+                    .GroupBy(cloth => new { cloth.Name, cloth.Color, cloth.Size })
+                    .Select(groupedCloth => new GroupedStatistics
+                    {
+                        Name = groupedCloth.Key.Name,
+                        Color = groupedCloth.Key.Color,
+                        Size = groupedCloth.Key.Size,
+                        TotalPieces = groupedCloth.Sum(cloth => cloth.NumOfPieces),
+                        TotalProfits = ProfitsInWeek
+                    })
+                    .ToList();
+
+                var mostSoldProduct = groupedWeeklyStatistics
+                    .OrderByDescending(stat => stat.TotalPieces)
+                    .FirstOrDefault();
+
+                if (mostSoldProduct != null)
+                {
+                    mostSoldProduct.Label = "Most Sold";
+                }
+
+                return Ok(new { Statistics = groupedWeeklyStatistics, MostSoldProduct = mostSoldProduct });
+            }
+
+            return BadRequest("Invalid period type.");
+        }
+    */
+
+
+
+
+
+
+    [NonAction]
+    public async Task<IActionResult> AddMoneyFromBillAdding(MoneyUpdateDto moneyUpdateDto)
+    {
+        if (moneyUpdateDto == null)
+        {
+            return BadRequest("Invalid data");
+        }
+
+       
+        var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+        var money = _dbContext.Moneys!.Where(m => m.ShopName == whatToSeeValue).FirstOrDefault(); // Adjust as needed
+        if (money == null)
+        {
+            money = new Money(); // Create a new Money instance with default values
+            money.ShopName = moneyUpdateDto.ShopName;
+            _dbContext.Moneys!.Add(money); // Add it to the database context
+        }
+
         if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
         {
-            money.UpdateMoneyInBox(moneyUpdateDto.Amount);
+            money.AddMoneyToBox(moneyUpdateDto.Amount);
         }
         else if (moneyUpdateDto.AccountType == MoneyAccountType.Visa)
         {
-            money.UpdateMoneyInVisa(moneyUpdateDto.Amount);
+            money.AddMoneyToVisa(moneyUpdateDto.Amount);
         }
         else
         {
@@ -410,13 +559,8 @@ public class BillController : MyBaseController<Bill, BillDto>
 
         await _dbContext.SaveChangesAsync();
 
-        return Ok("Money updated successfully");
+        return Ok("Money added successfully");
     }
-
-
-
-
-
 
 
 
@@ -435,6 +579,7 @@ public class GroupedStatistics
     public string Color { get; set; }
     public int Size { get; set; }
     public int TotalPieces { get; set; }
+    public int TotalProfits { get; set; }
     public string Label { get; set; }
 }
 
@@ -450,7 +595,7 @@ public class MoneyUpdateDto
 {
     public MoneyAccountType AccountType { get; set; }
     public int Amount { get; set; }
-    public string ShopName { get; set; }
+    public string? ShopName { get; set; }
 }
 
 public enum MoneyAccountType

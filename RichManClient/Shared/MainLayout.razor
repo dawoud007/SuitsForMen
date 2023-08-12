@@ -10,12 +10,29 @@
         </div>
 
         <main>
-            <div class="top-row px-4" style="display: flex; justify-content: right;">
+            
+         
+            <div class="top-row px-4" style="display: flex; justify-content: left;">
+
+            
+                <button @onclick="TogglePasswordInput" style="background-color: blue; color: white; padding: 5px; text-decoration: none; margin-right: 10px; border-radius: 5px;">المخفي</button>
+                @if (showPasswordInput)
+                {
+                    <div class="password-input">
+                        <input type="password" @bind="enteredPassword" style="margin-top:25px;"class="form-control" placeholder="Enter Password" />
+                        <button @onclick="CheckPasswordAndShowLink" class="login-button btn btn-primary">دخول</button>
+                    </div>
+                }
+
+         
                 <a href="/logout" style="background-color: blue; color: white; padding: 5px; text-decoration: none; margin-right: 10px; border-radius: 5px;">تسجيل خروج</a>
                
                 
                 <a href="/signup" style="background-color: red; color: white; padding: 5px; text-decoration: none; margin-left: 10px; border-radius: 5px;">اضافة محل </a>
-
+                @if (showHiddenLink)
+                {
+                    <button class="btn btn-primary" style="margin:10px;"@onclick="GoToAddBillPage">احصائيات</button>
+                }
                 <!-- Other navigation links for logged-in users -->
             </div>
                    
@@ -188,3 +205,29 @@
     </main>
     }
 </div>
+
+@code {
+    private bool showPasswordInput = false;
+    private bool showHiddenLink = false;
+    private string enteredPassword = "";
+    private string correctPassword = "1234"; // Set your desired password here
+
+    private void TogglePasswordInput()
+    {
+        showPasswordInput = !showPasswordInput;
+        enteredPassword = "";
+        showHiddenLink = false;
+    }
+    void GoToAddBillPage()
+    {
+        NavigationManager.NavigateTo("/price-difference");
+    }
+    private void CheckPasswordAndShowLink()
+    {
+        if (enteredPassword == correctPassword)
+        {
+            showHiddenLink = true;
+            showPasswordInput = false;
+        }
+    }
+}

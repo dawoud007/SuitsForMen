@@ -10,6 +10,7 @@ namespace ElectronicsShop_service.Dtos
         public string? BuyerName { get; set; }
         public string? SellerName { get; set; }
         public string? Description { get; set; }
+        public MoneyAccountType AccountType { get; set; }
 
         public DateTime DateCreated { get; set; }
         public string? WorkerName { get; set; }

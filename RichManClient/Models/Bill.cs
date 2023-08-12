@@ -16,6 +16,8 @@ namespace ElectronicsShop_service.Models
         public string SellerName { get; set; }
         public string Description { get; set; }
         public int NumberOfPieces { get; set; }
+        public MoneyAccountType AccountType { get; set; }
+
         public DateTime DateCreated { get; set; }
         public string WorkerName { get; set; }
         public int SellingPricee { get; set; }
