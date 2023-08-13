@@ -10,18 +10,18 @@
 @inject AuthService AuthService
 @inject SharedStateService sharedStateService
 <style>
-    /* Add your custom styles here */
-    .form-group label {
+      /* Add your custom styles here */
+      .form-group label {
         font-weight: bold;
-    }
+      }
 
-    .form-control {
+      .form-control {
         border-color: blue;
-    }
+      }
 
-    .btn-primary {
-        background-color: white;
-        color: #11d;
+      .btn-primary {
+        background-color: #11d;
+        color: white;
         padding: 10px 20px;
         border: none;
         border-radius: 5px;
@@ -29,58 +29,60 @@
         margin-top: 20px;
         font-weight: bold;
         transition: background-color 0.3s ease, color 0.3s ease;
-    }
+      }
 
-        .btn-primary:hover {
-            background-color: white;
-            color: #0a0a8b;
-        }
+      .btn-primary:hover {
+        background-color: #0a0a8b; /* Slightly darker color on hover */
+        color: white;
+      }
 
-    .container {
+      .container {
         width: 90%;
         background-color: #f5f5f5;
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
-    }
+      }
 
-    .styled-container {
+      .styled-container {
         display: flex;
         justify-content: space-between;
-        width:100%;
-        background-color: #11d;
-        color: white;
+        width: 80%;
+        background-color: #f5f5f5; /* Adding a light background color */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+
+        color: #000;
         padding: 1.5rem;
         border-radius: 10px;
         margin-bottom: 1rem;
-    }
+      }
 
-    .money-values {
+      .money-values {
         width: 40%;
         font-weight: bold;
-    }
+      }
 
-    .form-section {
+      .form-section {
         width: 58%;
-    }
+      }
 
-    .form-group {
+      .form-group {
         margin-bottom: 15px;
-    }
+      }
 
-    .form-container {
+      .form-container {
         display: flex;
         flex-direction: column;
         align-items: center;
-    }
+      }
 
-    h3,
-    h4 {
+      h3,
+      h4 {
         font-size: 2rem;
         font-weight: 700;
         color: #000;
-    }
-</style>
+      }
+    </style>
 
 <div class="container form-container">
 
