@@ -107,8 +107,8 @@ builder.Services.AddCors(options =>
         builder.SetIsOriginAllowed(origin =>
         {
             return origin == "https://richmanshops.azurewebsites.net" ||
-                   origin == "https://localhost:7040" ||
-                   origin == "*";
+                   origin == "https://localhost:7040";
+                 
         })
         .AllowAnyHeader()
         .AllowAnyMethod();

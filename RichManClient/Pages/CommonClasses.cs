@@ -2,7 +2,7 @@
 {
     public class SharedStateService
     {
-        public string? Api_Uri { get; set; } = "https://bigrichman.azurewebsites.net/";
+        public string? Api_Uri { get; set; } = "http://localhost:5000/";
     }
 
 
