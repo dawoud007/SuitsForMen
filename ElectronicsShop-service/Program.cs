@@ -105,8 +105,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: "Allowblazor",
         builder =>
     {
-         builder.WithOrigins("*")
-         .AllowAnyHeader() .AllowAnyMethod();
+        builder.WithOrigins("*")
+        .AllowAnyHeader().AllowAnyMethod();
 
     });
 });

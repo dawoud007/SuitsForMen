@@ -206,9 +206,36 @@ public class BillController : MyBaseController<Bill, BillDto>
                 Amount = bill.SellingPricee,
                 ShopName = whatToSeeValue
             };
-            AddMoneyToAccount(AddToSAve);
+     
+        if (AddToSAve == null)
+        {
+            return Ok("Invalid data");
+        }
 
+        // Use a separate DbContext instance within the method scope
+      
+           
+            var money = _dbContext.Moneys.FirstOrDefault(m => m.ShopName == whatToSeeValue);
+            if (money == null)
+            {
+                money = new Money(); // Create a new Money instance with default values
+                money.ShopName = AddToSAve.ShopName;
+                _dbContext.Moneys.Add(money); // Add it to the database context
+            }
 
+            if (AddToSAve.AccountType == MoneyAccountType.Box)
+            {
+                money.AddMoneyToBox(AddToSAve.Amount);
+            }
+            else if (AddToSAve.AccountType == MoneyAccountType.Visa)
+            {
+                money.AddMoneyToVisa(AddToSAve.Amount);
+
+                await _dbContext.SaveChangesAsync();
+
+                
+            }
+           
             return Ok(bill);
 		}
 		catch (Exception ex)
@@ -340,15 +367,14 @@ public class BillController : MyBaseController<Bill, BillDto>
         }
 
         // Use a separate DbContext instance within the method scope
-        using (var dbContext = new ApplicationDbContext()) // Replace YourDbContext with your actual DbContext class
-        {
+      
             var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
-            var money = dbContext.Moneys.FirstOrDefault(m => m.ShopName == whatToSeeValue);
+            var money = _dbContext.Moneys.FirstOrDefault(m => m.ShopName == whatToSeeValue);
             if (money == null)
             {
                 money = new Money(); // Create a new Money instance with default values
                 money.ShopName = moneyUpdateDto.ShopName;
-                dbContext.Moneys.Add(money); // Add it to the database context
+                _dbContext.Moneys.Add(money); // Add it to the database context
             }
 
             if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
@@ -364,15 +390,15 @@ public class BillController : MyBaseController<Bill, BillDto>
                 return BadRequest("Invalid account type");
             }
 
-            await dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
             return Ok("Money added successfully");
-        }
+        
     }
 
 
     [Authorize(AuthenticationSchemes = "Bearer")]
-    [HttpDelete("delete-money")]
+    [HttpPost("delete-money")]
     public async Task<IActionResult> DeleteMoneyFromAccount([FromBody] MoneyUpdateDto moneyUpdateDto)
     {
         var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
