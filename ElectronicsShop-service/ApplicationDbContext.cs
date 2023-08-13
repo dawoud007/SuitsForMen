@@ -25,6 +25,11 @@ public class ApplicationDbContext : DbContext
     {
         this.configuration = configuration;
     }
+
+    public ApplicationDbContext()
+    {
+    }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         /*   if (!optionsBuilder.IsConfigured)

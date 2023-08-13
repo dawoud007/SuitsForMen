@@ -98,16 +98,16 @@ public class AuthController : ControllerBase
     [HttpPost("signup")]
     public async Task<IActionResult> SignUp([FromBody] SignUpModel model)
     {
-        var UserClaim=User.Claims.Where(c=>c.Value=="Admin").FirstOrDefault().Value;
-  
+        var UserClaim = User.Claims.Where(c => c.Value == "Admin").FirstOrDefault().Value;
+
         // Get the role claim from the user's token
-       
+
 
         if (UserClaim == null)
         {
             return BadRequest("User role claim not found.");
         }
-        
+
 
 
         if (UserClaim == "Admin")
@@ -122,10 +122,10 @@ public class AuthController : ControllerBase
             {
                 return BadRequest("Username already exists. Please choose a different username.");
             }
-         /*   if (model.Role == "User" || model.Role != "Admin")
-            {
-                return BadRequest("Role value is not set probely");
-            }*/
+            /*   if (model.Role == "User" || model.Role != "Admin")
+               {
+                   return BadRequest("Role value is not set probely");
+               }*/
             // You may add more validations here if needed.
 
             // Create a new user and add it to the user list.
@@ -250,10 +250,11 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> GetAllUsers()
     {
 
-      /*  string usernameWhoUpdate = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;*/
+        /*  string usernameWhoUpdate = User.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;*/
         var users = await _userManager.Users.ToListAsync();
         var userInfos = users.Select(user => new UserInfoModel
-        {   Id=user.Id,
+        {
+            Id = user.Id,
             UserName = user.UserName,
             Role = user.Role,
             WhatToSee = user.WhatToSee
@@ -263,10 +264,10 @@ public class AuthController : ControllerBase
     }
 
     [HttpDelete("DeleteUser/{id}")]
-    
+
     public async Task<IActionResult> DeleteUser(string name)
     {
-       
+
         var user = await _userManager.FindByNameAsync(name);
         if (user == null)
         {
@@ -297,7 +298,7 @@ public class AuthController : ControllerBase
     [AllowAnonymous]
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpPost("AddWorkersToShop")]
-    public async Task<IActionResult> AddWorkersToShop([FromBody] List<Worker>? workUsers)
+    public async Task<IActionResult> AddWorkersToShop([FromBody] string workUserName)
     {
         var userNameClaim = User.FindFirst("Name")?.Value;
         var userShopClaim = User.FindFirst("WhatToSee")?.Value;
@@ -307,28 +308,30 @@ public class AuthController : ControllerBase
         {
             return NotFound("User not found.");
         }
-     
-        foreach (var workerUsername in workUsers!)
+        Worker workUser = new Worker
         {
-            var x=_dbContext.ShopWorkers!.Where(w=>w.WhatToSee==userShopClaim).ToList();
-            foreach(var u in x)
-            {
-                if (u.WorkerName == workerUsername.WorkerName) { return Ok("user alreay exists"); }
-                _dbContext.ShopWorkers!.Add(workerUsername);
-            }
-            if (x.Count ==0)
-            {
-                _dbContext.ShopWorkers!.Add(workerUsername);
-            }
-         
+            WorkerName = workUserName,
+            WhatToSee = userShopClaim,
+        };
 
+        var x = _dbContext.ShopWorkers!.Where(w => w.WhatToSee == userShopClaim).ToList();
+        foreach (var u in x)
+        {
+            if (u.WorkerName == workUser.WorkerName) { return Ok("user alreay exists"); }
+            _dbContext.ShopWorkers!.Add(workUser);
         }
+        if (x.Count == 0)
+        {
+            _dbContext.ShopWorkers!.Add(workUser);
+        }
+
+
         await _userManager.UpdateAsync(user);
         _dbContext.SaveChanges();
 
         return Ok("worker is added");
 
-            }
+    }
 
     [AllowAnonymous]
     [Authorize(AuthenticationSchemes = "Bearer")]
@@ -343,12 +346,47 @@ public class AuthController : ControllerBase
         {
             return NotFound("User not found.");
         }
-        var workingUsers= _dbContext.ShopWorkers!.Where(w => w.WhatToSee == userShopClaim).ToList();
+        var workingUsers = _dbContext.ShopWorkers!.Where(w => w.WhatToSee == userShopClaim).ToList();
 
         return Ok(workingUsers);
     }
 
 
+    [AllowAnonymous]
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpDelete("DeleteWorkersFromShop")]
+    public async Task<IActionResult> DeleteWorkersFromShop( string? workersToDelete)
+    {
+        var userNameClaim = User.FindFirst("Name")?.Value;
+        var userShopClaim = User.FindFirst("WhatToSee")?.Value;
+
+        var user = await _userManager.FindByNameAsync(userNameClaim);
+        if (user == null)
+        {
+            return NotFound("shop not found.");
+        }
+
+        var workersInShop = _dbContext.ShopWorkers!
+            .Where(w => w.WhatToSee == userShopClaim)
+            .ToList();
+
+
+        var existingWorker = workersInShop.FirstOrDefault(w => w.WorkerName == workersToDelete);
+        if (existingWorker != null)
+        {
+            _dbContext.ShopWorkers!.Remove(existingWorker);
+        }
+        else
+        {
+            return Ok("no worker of this namw exists");
+        }
+
+
+        await _userManager.UpdateAsync(user);
+        _dbContext.SaveChanges();
+
+        return Ok("Workers deleted successfully.");
+    }
 
 
 }
@@ -375,7 +413,7 @@ public class SignUpModel
 public class UserInfoModel
 {
 
-    public int ? Id { get; set; }
+    public int? Id { get; set; }
     public string UserName { get; set; }
     public string Role { get; set; }
     public string WhatToSee { get; set; }

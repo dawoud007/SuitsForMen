@@ -142,7 +142,10 @@ public class BillController : MyBaseController<Bill, BillDto>
         int TotalSellingPrice=0;
 		var list=new List<Cloth>();
 
-		
+		if(billDto.Suits.Count() ==0)
+        {
+            return Ok("you must add a least a piece");
+        }
 		foreach(var suit in billDto.Suits!)
 		{
           
@@ -203,7 +206,7 @@ public class BillController : MyBaseController<Bill, BillDto>
                 Amount = bill.SellingPricee,
                 ShopName = whatToSeeValue
             };
-            AddMoneyFromBillAdding(AddToSAve);
+            AddMoneyToAccount(AddToSAve);
 
 
             return Ok(bill);
@@ -336,33 +339,37 @@ public class BillController : MyBaseController<Bill, BillDto>
             return BadRequest("Invalid data");
         }
 
-        // Retrieve or create the Money record
-        var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
-        var money = _dbContext.Moneys!.Where(m => m.ShopName == whatToSeeValue).FirstOrDefault(); // Adjust as needed
-        if (money == null)
+        // Use a separate DbContext instance within the method scope
+        using (var dbContext = new ApplicationDbContext()) // Replace YourDbContext with your actual DbContext class
         {
-            money = new Money(); // Create a new Money instance with default values
-            money.ShopName= moneyUpdateDto.ShopName;
-            _dbContext.Moneys!.Add(money); // Add it to the database context
-        }
+            var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+            var money = dbContext.Moneys.FirstOrDefault(m => m.ShopName == whatToSeeValue);
+            if (money == null)
+            {
+                money = new Money(); // Create a new Money instance with default values
+                money.ShopName = moneyUpdateDto.ShopName;
+                dbContext.Moneys.Add(money); // Add it to the database context
+            }
 
-        if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
-        {
-            money.AddMoneyToBox(moneyUpdateDto.Amount);
-        }
-        else if (moneyUpdateDto.AccountType == MoneyAccountType.Visa)
-        {
-            money.AddMoneyToVisa(moneyUpdateDto.Amount);
-        }
-        else
-        {
-            return BadRequest("Invalid account type");
-        }
+            if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
+            {
+                money.AddMoneyToBox(moneyUpdateDto.Amount);
+            }
+            else if (moneyUpdateDto.AccountType == MoneyAccountType.Visa)
+            {
+                money.AddMoneyToVisa(moneyUpdateDto.Amount);
+            }
+            else
+            {
+                return BadRequest("Invalid account type");
+            }
 
-        await _dbContext.SaveChangesAsync();
+            await dbContext.SaveChangesAsync();
 
-        return Ok("Money added successfully");
+            return Ok("Money added successfully");
+        }
     }
+
 
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpDelete("delete-money")]
@@ -534,32 +541,45 @@ public class BillController : MyBaseController<Bill, BillDto>
             return BadRequest("Invalid data");
         }
 
-       
         var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
-        var money = _dbContext.Moneys!.Where(m => m.ShopName == whatToSeeValue).FirstOrDefault(); // Adjust as needed
+        var money = _dbContext.Moneys
+            .Where(m => m.ShopName == whatToSeeValue)
+            .FirstOrDefault();
+
         if (money == null)
         {
-            money = new Money(); // Create a new Money instance with default values
-            money.ShopName = moneyUpdateDto.ShopName;
-            _dbContext.Moneys!.Add(money); // Add it to the database context
+            money = new Money
+            {
+                ShopName = whatToSeeValue
+            };
+
+            _dbContext.Moneys.Add(money);
         }
 
-        if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
+        try
         {
-            money.AddMoneyToBox(moneyUpdateDto.Amount);
-        }
-        else if (moneyUpdateDto.AccountType == MoneyAccountType.Visa)
-        {
-            money.AddMoneyToVisa(moneyUpdateDto.Amount);
-        }
-        else
-        {
-            return BadRequest("Invalid account type");
-        }
+            if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
+            {
+                money.AddMoneyToBox(moneyUpdateDto.Amount);
+            }
+            else if (moneyUpdateDto.AccountType == MoneyAccountType.Visa)
+            {
+                money.AddMoneyToVisa(moneyUpdateDto.Amount);
+            }
+            else
+            {
+                return BadRequest("Invalid account type");
+            }
 
-        await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync();
 
-        return Ok("Money added successfully");
+            return Ok("Money added successfully");
+        }
+        catch (Exception ex)
+        {
+            // Handle exception
+            return StatusCode(500, "An error occurred while processing the request.");
+        }
     }
 
 

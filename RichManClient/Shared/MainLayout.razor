@@ -19,8 +19,8 @@
                 @if (showPasswordInput)
                 {
                     <div class="password-input">
-                        <input type="password" @bind="enteredPassword" style="margin-top:25px;"class="form-control" placeholder="Enter Password" />
-                        <button @onclick="CheckPasswordAndShowLink" class="login-button btn btn-primary">دخول</button>
+                        <input type="password" @bind="enteredPassword" style="margin-top:50px;"class="form-control" placeholder="Enter Password" />
+                        <button @onclick="CheckPasswordAndShowLink" style="left:30px;" class="login-button btn btn-primary">دخول</button>
                     </div>
                 }
 
@@ -32,6 +32,7 @@
                 @if (showHiddenLink)
                 {
                     <button class="btn btn-primary" style="margin:10px;"@onclick="GoToAddBillPage">احصائيات</button>
+                    <button class="btn btn-primary" style="margin:10px;"@onclick="AddWorkers">اضافة عمال</button>
                 }
                 <!-- Other navigation links for logged-in users -->
             </div>
@@ -130,7 +131,7 @@
 
             <div class="parent">
                 <div class="container">
-                    <h3>Login</h3>
+                    <h3>Rich Man</h3>
                     <div class="form-group">
                         <label for="username">اسم المستخدم</label>
                         <input type="text" id="username" @bind="model.Username" class="form-control" />
@@ -221,6 +222,11 @@
     void GoToAddBillPage()
     {
         NavigationManager.NavigateTo("/price-difference");
+
+    }
+    void AddWorkers()
+    {
+        NavigationManager.NavigateTo("/workers");
     }
     private void CheckPasswordAndShowLink()
     {
