@@ -102,12 +102,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "Allowblazor",
-        builder =>
+    options.AddPolicy("CustomCorsPolicy", builder =>
     {
-        builder.WithOrigins("*")
-        .AllowAnyHeader().AllowAnyMethod();
-
+        builder.SetIsOriginAllowed(origin =>
+        {
+            return origin == "https://richmanshops.azurewebsites.net" ||
+                   origin == "https://localhost:7040" ||
+                   origin == "*";
+        })
+        .AllowAnyHeader()
+        .AllowAnyMethod();
     });
 });
 
@@ -129,7 +133,7 @@ app.UseSwaggerUI();
 /*app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());*/
 
 app.UseRouting();
-app.UseCors("Allowblazor");
+app.UseCors("CustomCorsPolicy");
 app.UseAuthentication();
 
 app.UseAuthorization();
