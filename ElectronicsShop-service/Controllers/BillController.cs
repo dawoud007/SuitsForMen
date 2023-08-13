@@ -207,20 +207,20 @@ public class BillController : MyBaseController<Bill, BillDto>
                 ShopName = whatToSeeValue
             };
      
-        if (AddToSAve == null)
+        if (AddToSAve == null || AddToSAve.Amount<0)
         {
             return Ok("Invalid data");
         }
 
-        // Use a separate DbContext instance within the method scope
-      
-           
-            var money = _dbContext.Moneys.FirstOrDefault(m => m.ShopName == whatToSeeValue);
+            // Use a separate DbContext instance within the method scope
+
+
+            var money = _dbContext.Moneys!.FirstOrDefault(m => m.ShopName == whatToSeeValue);
             if (money == null)
             {
                 money = new Money(); // Create a new Money instance with default values
                 money.ShopName = AddToSAve.ShopName;
-                _dbContext.Moneys.Add(money); // Add it to the database context
+                _dbContext.Moneys!.Add(money); // Add it to the database context
             }
 
             if (AddToSAve.AccountType == MoneyAccountType.Box)
@@ -233,9 +233,9 @@ public class BillController : MyBaseController<Bill, BillDto>
 
                 await _dbContext.SaveChangesAsync();
 
-                
+
             }
-           
+
             return Ok(bill);
 		}
 		catch (Exception ex)
@@ -361,13 +361,15 @@ public class BillController : MyBaseController<Bill, BillDto>
     [HttpPost("add-money")]
     public async Task<IActionResult> AddMoneyToAccount([FromBody] MoneyUpdateDto moneyUpdateDto)
     {
-        if (moneyUpdateDto == null)
+        if (moneyUpdateDto.Amount >= 0)
         {
-            return BadRequest("Invalid data");
-        }
+            if (moneyUpdateDto == null)
+            {
+                return BadRequest("Invalid data");
+            }
 
-        // Use a separate DbContext instance within the method scope
-      
+            // Use a separate DbContext instance within the method scope
+
             var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
             var money = _dbContext.Moneys.FirstOrDefault(m => m.ShopName == whatToSeeValue);
             if (money == null)
@@ -393,6 +395,8 @@ public class BillController : MyBaseController<Bill, BillDto>
             await _dbContext.SaveChangesAsync();
 
             return Ok("Money added successfully");
+        }
+        return BadRequest("invalid input");
         
     }
 
@@ -401,37 +405,42 @@ public class BillController : MyBaseController<Bill, BillDto>
     [HttpPost("delete-money")]
     public async Task<IActionResult> DeleteMoneyFromAccount([FromBody] MoneyUpdateDto moneyUpdateDto)
     {
-        var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
-      
-        if (moneyUpdateDto == null)
+        if (moneyUpdateDto.Amount >= 0)
         {
-            return BadRequest("Invalid data");
+            var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+
+            if (moneyUpdateDto == null)
+            {
+                return BadRequest("Invalid data");
+            }
+
+            var money = _dbContext.Moneys!.Where(m => m.ShopName == whatToSeeValue).FirstOrDefault(); // Adjust as needed
+
+
+            if (money == null)
+            {
+                return NotFound("Money data not found");
+            }
+
+            if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
+            {
+                money.RemoveMoneyFromBox(moneyUpdateDto.Amount);
+            }
+            else if (moneyUpdateDto.AccountType == MoneyAccountType.Visa)
+            {
+                money.RemoveMoneyFromVisa(moneyUpdateDto.Amount);
+            }
+            else
+            {
+                return BadRequest("Invalid account type");
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return Ok("Money deleted successfully");
         }
-
-        var money = _dbContext.Moneys!.Where(m => m.ShopName == whatToSeeValue).FirstOrDefault(); // Adjust as needed
-
-
-        if (money == null)
-        {
-            return NotFound("Money data not found");
-        }
-
-        if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
-        {
-            money.RemoveMoneyFromBox(moneyUpdateDto.Amount);
-        }
-        else if (moneyUpdateDto.AccountType == MoneyAccountType.Visa)
-        {
-            money.RemoveMoneyFromVisa(moneyUpdateDto.Amount);
-        }
-        else
-        {
-            return BadRequest("Invalid account type");
-        }
-
-        await _dbContext.SaveChangesAsync();
-
-        return Ok("Money deleted successfully");
+        return BadRequest("invalid input");
+     
     }
 
 
@@ -566,6 +575,7 @@ public class BillController : MyBaseController<Bill, BillDto>
         {
             return BadRequest("Invalid data");
         }
+    
 
         var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
         var money = _dbContext.Moneys
@@ -640,6 +650,7 @@ public enum PeriodType
 public class MoneyUpdateDto
 {
     public MoneyAccountType AccountType { get; set; }
+   
     public int Amount { get; set; }
     public string? ShopName { get; set; }
 }
