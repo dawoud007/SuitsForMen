@@ -105,7 +105,7 @@
 
     private async Task LoadUsers()
     {
-        users = await Http.GetFromJsonAsync<List<User>>(sharedStateService.Api_Uri + "Auth/GetAllUsers")!;
+        users = await Http.GetFromJsonAsync<List<User>>(sharedStateService.Api_Uri + "Shop/GetAllUsers")!;
     }
 
     private async Task DeleteUser(User user)

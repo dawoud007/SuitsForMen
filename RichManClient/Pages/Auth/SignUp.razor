@@ -127,29 +127,30 @@
 
     private async Task SignupUser()
     {
-
         var token = await AuthService.GetAccessTokenAsync();
 
         // Set the authorization header for the HttpClient
         if (!string.IsNullOrEmpty(token))
         {
-            Http.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
 
         // Make the API call
-        var response = await Http.PostAsJsonAsync(sharedStateService.Api_Uri + "Auth/signup", model);
+        var response = await Http.PostAsJsonAsync(sharedStateService.Api_Uri + "Shop/AddShopToRichMan", model);
+
+        // Handle the response
         if (response.IsSuccessStatusCode)
         {
-            isRegistered = true; // Show success message
-            isError = false; // Clear error message
-            model = new SignUpModel(); // Clear input fields
+            isRegistered = true;
+            isError = false;
+            model = new SignUpModel();
         }
         else
         {
-            isError = true; // Show error message
+            isError = true;
             var errorMessageResponse = await response.Content.ReadAsStringAsync();
-            errorMessage = errorMessageResponse; // Display the error message
+            errorMessage = errorMessageResponse;
         }
-      
     }
 }
+

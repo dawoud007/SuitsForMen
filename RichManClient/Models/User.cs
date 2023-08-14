@@ -26,6 +26,7 @@ namespace ElectronicsShop_service.Models
     public class MoneyUpdateDto
     {
         public MoneyAccountType AccountType { get; set; }
+
         public int Amount { get; set; }
         public string? ShopName { get; set; }
     }

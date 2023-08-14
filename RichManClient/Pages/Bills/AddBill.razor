@@ -191,7 +191,7 @@
     {
         try
         {
-            Workers = await Http.GetFromJsonAsync<List<Worker>>(sharedStateService.Api_Uri + "Auth/GetWorkersToShop");
+            Workers = await Http.GetFromJsonAsync<List<Worker>>(sharedStateService.Api_Uri + "Shop/GetWorkersToShop");
         }
         catch (Exception ex)
         {

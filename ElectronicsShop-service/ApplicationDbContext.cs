@@ -1,4 +1,3 @@
-using ElectronicsShop_service.IdentityHandler;
 using ElectronicsShop_service.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -11,10 +10,10 @@ public class ApplicationDbContext : DbContext
 
     public DbSet<Cloth>? Clothes { get; set; }
     public DbSet<Bill>? Bills { get; set; }
-    public DbSet<User>? Users { get; set; }
     public DbSet<Money>? Moneys{ get; set; }
 
     public DbSet<Worker>? ShopWorkers { get; set; }
+    public DbSet<Shop>? Shops { get; set; }
 
 
 
@@ -44,43 +43,25 @@ public class ApplicationDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
-
-        // Seed roles
-
-        builder.Entity<ApplicationRole>().HasData(
-          new ApplicationRole { Id = "1", Name = "Admin", NormalizedName = "ADMIN", userId = 1 },
-          new ApplicationRole { Id = "2", Name = "User", NormalizedName = "USER", userId = 2 }
-      );
-        // Seed users
-        var user1 = new User
+        var shop = new Shop
         {
-            Id = 50,
+            Id = Guid.NewGuid(),
             UserName = "reda",
-            NormalizedUserName = "REDA",
-            Password = "Reda12@",
+            Password = "Reda12@",  // Plain password
             Role = "Admin",
             WhatToSee = "shop1",
             CreationDate = DateTime.Now
         };
 
-        PasswordHasher<User> passwordHasher = new PasswordHasher<User>();
-        user1.PasswordHash = passwordHasher.HashPassword(user1, user1.Password);
+        builder.Entity<Shop>().HasData(shop);
+        // Seed roles
 
-        builder.Entity<User>().HasData(user1);
-
-          /* builder.Entity<IdentityUserRole<string>>().HasData(
-                new IdentityUserRole<string> { UserId = $"{user1.Id}", RoleId = "1" } // Assigning "Admin" role to user1
-            );*/
+        // Seed users
+        
 
 
-        // Seed user roles
 
-
-        // Ignore unnecessary identity related tables
-        /*   builder.Ignore<IdentityUserLogin<string>>();
-           builder.Ignore<IdentityUserToken<string>>();
-           builder.Ignore<IdentityUserClaim<string>>();
-           builder.Ignore<IdentityRoleClaim<string>>();*/
+      
     }
 }
 

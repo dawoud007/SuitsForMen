@@ -5,25 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ElectronicsShop_service.Migrations
 {
-    public partial class addModels : Migration
+    public partial class uploadTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "ApplicationRole",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    userId = table.Column<int>(type: "int", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ApplicationRole", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Bills",
                 columns: table => new
@@ -34,6 +19,7 @@ namespace ElectronicsShop_service.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     NumberOfPieces = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    AccountType = table.Column<int>(type: "int", nullable: false),
                     WorkerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SellingPricee = table.Column<int>(type: "int", nullable: false),
                     ProfitDifference = table.Column<int>(type: "int", nullable: false),
@@ -60,6 +46,22 @@ namespace ElectronicsShop_service.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Shops",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    WhatToSee = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Shops", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ShopWorkers",
                 columns: table => new
                 {
@@ -71,36 +73,6 @@ namespace ElectronicsShop_service.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ShopWorkers", x => x.WorkerId);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    UserName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    WhatToSee = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    NormalizedUserName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NormalizedEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
-                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
-                    AccessFailedCount = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,19 +104,9 @@ namespace ElectronicsShop_service.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ApplicationRole",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName", "userId" },
-                values: new object[] { "1", "18e1e86d-2277-44b9-aaa2-92f53653fae7", "Admin", "ADMIN", 1 });
-
-            migrationBuilder.InsertData(
-                table: "ApplicationRole",
-                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName", "userId" },
-                values: new object[] { "2", "171d45dc-eb0a-414c-8b20-0a172cd001ad", "User", "USER", 2 });
-
-            migrationBuilder.InsertData(
-                table: "Users",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "CreationDate", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "Password", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "Role", "SecurityStamp", "TwoFactorEnabled", "UserName", "WhatToSee" },
-                values: new object[] { 50, 0, "1e7c171b-5ce0-412e-84cc-f2768077c4aa", new DateTime(2023, 8, 11, 15, 48, 14, 563, DateTimeKind.Local).AddTicks(6418), null, false, false, null, null, "REDA", "Reda12@", "AQAAAAEAACcQAAAAENImlje3AjuwtrtlMUtP+HYioEtjZa98yBlXtX8zyFhEsoekiTkUFUu0qWzCIq8w/w==", null, false, "Admin", "6be07e99-c0c3-46bc-a25c-54543cfd078f", false, "reda", "shop1" });
+                table: "Shops",
+                columns: new[] { "Id", "CreationDate", "Password", "Role", "UserName", "WhatToSee" },
+                values: new object[] { new Guid("65780a9c-6cb9-4eea-bb06-2a1b47ff08f4"), new DateTime(2023, 8, 14, 12, 17, 18, 296, DateTimeKind.Local).AddTicks(876), "Reda12@", "Admin", "reda", "shop1" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Clothes_BillId",
@@ -155,19 +117,16 @@ namespace ElectronicsShop_service.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ApplicationRole");
-
-            migrationBuilder.DropTable(
                 name: "Clothes");
 
             migrationBuilder.DropTable(
                 name: "Moneys");
 
             migrationBuilder.DropTable(
-                name: "ShopWorkers");
+                name: "Shops");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "ShopWorkers");
 
             migrationBuilder.DropTable(
                 name: "Bills");

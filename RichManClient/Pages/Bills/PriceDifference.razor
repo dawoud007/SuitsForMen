@@ -28,7 +28,7 @@ else
             <tr>
                 <th>اسم المشتري</th>
                 <th>اسم البائع</th>
-                <th>تفاصيل</th>
+                <th>سعر البيع</th>
                 <th>الربح</th>
                 <th>التاريخ</th>
 
@@ -68,7 +68,7 @@ else
     {
         try
         {
-            Workers = await Http.GetFromJsonAsync<List<Worker>>(sharedStateService.Api_Uri + "Auth/GetWorkersToShop");
+            Workers = await Http.GetFromJsonAsync<List<Worker>>(sharedStateService.Api_Uri + "Shop/GetWorkersToShop");
         }
         catch (Exception ex)
         {

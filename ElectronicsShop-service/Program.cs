@@ -1,7 +1,6 @@
 using System.Text;
 using ElectronicsShop_service;
 using ElectronicsShop_service.BusinessLogic;
-using ElectronicsShop_service.IdentityHandler;
 using ElectronicsShop_service.Interfaces;
 using ElectronicsShop_service.Models;
 using ElectronicsShop_service.Repositories;
@@ -15,7 +14,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using static ElectronicsShop_service.Controllers.AuthController;
 using ElectronicsShop_service.Options;
 using Authentication.Infrastructure.Models;
 using Microsoft.Extensions.Configuration;
@@ -38,14 +36,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(Options =>
 {
     Options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
-builder.Services.ConfigureOptions<IdentityOptionsSetup>();
 
 
 
-builder.Services.AddIdentity<User, ApplicationRole>()
-    .AddEntityFrameworkStores<ApplicationDbContext>()
-    .AddTokenProvider<DataProtectorTokenProvider<User>>(TokenOptions.DefaultProvider)
-    .AddRoles<ApplicationRole>();
+
+
 builder.Services.AddValidatorsFromAssembly(typeof(BillValidations).Assembly);
 builder.Services.AddAutoMapper(typeof(Program).Assembly);
 /*builder.Services.AddScoped<ITokenGenerator, GenerateJwtToken>();*/
@@ -61,7 +56,8 @@ builder.Services.AddScoped<IBillRepository, BillRepository>();
 builder.Services.AddScoped<IBillUnitOfWork, BillBusiness>();
 
 
-
+builder.Services.AddScoped<IShopRepository, ShopRepository>();
+builder.Services.AddScoped<IShopUnitOfWork, ShopBusiness>();
 
 
 /*builder.Services.AddScoped<IUserService, UserService>();
@@ -102,11 +98,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy(name: "Allowblazor",
-        builder =>
+    options.AddPolicy("AllowAnyOrigin", builder =>
     {
-         builder.WithOrigins("*")
-         .AllowAnyHeader() .AllowAnyMethod();
+        builder.WithOrigins("https://localhost:7040","https://richmanshops.azurewebsites.net")
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .WithExposedHeaders("Content-Disposition") // Add this line
+        .WithExposedHeaders("X-Custom-Header");   // Add any additional headers here
 
     });
 });
@@ -120,19 +118,16 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
     context.Database.Migrate();
 }
-// Configure the HTTP request pipeline.
-/*if (app.Environment.IsDevelopment())
-{*/
+
+app.UseCors("AllowAnyOrigin"); // Enable CORS before routing
+app.UseRouting();
+
 app.UseSwagger();
 app.UseSwaggerUI();
-/*}*/
-/*app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());*/
 
-app.UseRouting();
-app.UseCors("Allowblazor");
 app.UseAuthentication();
-
 app.UseAuthorization();
+
 app.UseEndpoints(endpoints =>
 {
     // Map your library's controllers to the appropriate routes
@@ -141,17 +136,6 @@ app.UseEndpoints(endpoints =>
         pattern: "{controller=Home}/{action=Index}/{id?}");
 });
 
-
 app.UseStaticFiles();
-
 app.MapControllers();
-
-
-app.UseEndpoints(endpoints =>
-{
-    endpoints.MapControllers();
-    // Other endpoints...
-});
-/*app.MapDefaultControllerRoute();*/
-
 app.Run();

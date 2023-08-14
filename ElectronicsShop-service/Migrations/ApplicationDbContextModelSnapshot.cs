@@ -22,46 +22,6 @@ namespace ElectronicsShop_service.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ElectronicsShop_service.IdentityHandler.ApplicationRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("userId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("ApplicationRole");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "1",
-                            ConcurrencyStamp = "6d49307a-6fe8-4a4b-9964-987ba64f1577",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN",
-                            userId = 1
-                        },
-                        new
-                        {
-                            Id = "2",
-                            ConcurrencyStamp = "3d97295e-806e-477f-9152-d6520a5b7ff5",
-                            Name = "User",
-                            NormalizedName = "USER",
-                            userId = 2
-                        });
-                });
-
             modelBuilder.Entity("ElectronicsShop_service.Models.Bill", b =>
                 {
                     b.Property<Guid>("Id")
@@ -181,90 +141,41 @@ namespace ElectronicsShop_service.Migrations
                     b.ToTable("Moneys");
                 });
 
-            modelBuilder.Entity("ElectronicsShop_service.Models.User", b =>
+            modelBuilder.Entity("ElectronicsShop_service.Models.Shop", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Role")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
 
                     b.Property<string>("UserName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("WhatToSee")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Shops");
 
                     b.HasData(
                         new
                         {
-                            Id = 50,
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "2dc1c8d1-43d0-4c61-90f7-353a287b9c15",
-                            CreationDate = new DateTime(2023, 8, 12, 14, 43, 38, 45, DateTimeKind.Local).AddTicks(1364),
-                            EmailConfirmed = false,
-                            LockoutEnabled = false,
-                            NormalizedUserName = "REDA",
+                            Id = new Guid("65780a9c-6cb9-4eea-bb06-2a1b47ff08f4"),
+                            CreationDate = new DateTime(2023, 8, 14, 12, 17, 18, 296, DateTimeKind.Local).AddTicks(876),
                             Password = "Reda12@",
-                            PasswordHash = "AQAAAAEAACcQAAAAELA+F8kA724HNYDv1nOIp15tYAcB1NGBcNHU2w1KljY9ouimHbHWs9FUzZViJMx/pw==",
-                            PhoneNumberConfirmed = false,
                             Role = "Admin",
-                            SecurityStamp = "f0aaba11-dbcf-43d0-808f-4d10e01912db",
-                            TwoFactorEnabled = false,
                             UserName = "reda",
                             WhatToSee = "shop1"
                         });
