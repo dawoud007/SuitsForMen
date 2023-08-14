@@ -8,6 +8,8 @@ using FluentValidation;
 using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
@@ -26,25 +28,80 @@ namespace ElectronicsShop_service.Controllers;
 
 public class BillController : MyBaseController<Bill, BillDto>
 {
-	private readonly IBillRepository _billRepository;
-	private readonly IClothRepository _clothRepository;
     private readonly ApplicationDbContext _dbContext;
-    public BillController(IBillRepository billRepository, IClothRepository clothRepository,
+    private readonly IBillRepository _billRepository;
+	private readonly IClothRepository _clothRepository;
+    public BillController(IBillRepository billRepository, IClothRepository clothRepository,ApplicationDbContext dbContext,
         IBillUnitOfWork unitOfWork, IMapper mapper,
-        IValidator<Bill> validator, ApplicationDbContext dbContext) : base(unitOfWork, mapper, validator)
+        IValidator<Bill> validator) : base(unitOfWork, mapper, validator)
 	{
 		_billRepository = billRepository;
 		_clothRepository = clothRepository;
         _dbContext = dbContext;
     }
 
+
+
+
+
+
+
+/*
+    [HttpPost]
+
     [Authorize(AuthenticationSchemes = "Bearer")]
+  
+
+    public async Task<IActionResult> AddShop([FromBody] SignUpModel model)
+    {
+        var UserClaim = User.Claims.Where(c => c.Value == "Admin").FirstOrDefault().Value;
+        if (UserClaim == null)
+        {
+            return BadRequest("User role claim not found.");
+        }
+        if (UserClaim == "Admin")
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("fill all colums");
+            }
+            var existingUser = _userManager.FindByNameAsync(model.UserName);
+            if (existingUser == null)
+            {
+                return BadRequest("Username already exists. Please choose a different username.");
+            }
+            var user = model.Adapt<User>();
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                return Ok(user);
+            }
+            else
+            {
+                return BadRequest(result.Errors.FirstOrDefault()?.Description);
+            }
+        }
+        else
+        {
+            return BadRequest("You are not authorized to create a new user.");
+        }
+    }
+
+*/
+
+
+
+
+
+
+
 	[HttpGet]
+ 
+
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public async Task<IActionResult> GetAll()
 	{
         var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
-
-  
 
         var ShopBills = (await _billRepository.Get(b => b.SellerName == whatToSeeValue)).ToList();
         if (!ShopBills.Any())
@@ -178,7 +235,7 @@ public class BillController : MyBaseController<Bill, BillDto>
 
                     var suits = await FindSuitWithFeatures(suitDto!);
                   
-                        TotalSellingPrice += suits.Gomla;
+                        TotalSellingPrice += suits.Gomla*suitDto.NumOfPieces;
                     
 					if (suitDto != null)
 					{

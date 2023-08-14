@@ -13,4 +13,5 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<WorkerSelectionService>();
 builder.Services.AddScoped<SharedStateService>();
 
+
 await builder.Build().RunAsync();

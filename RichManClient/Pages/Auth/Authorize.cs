@@ -3,7 +3,6 @@ using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
-using static RichManClient.Pages.Auth.Login;
 
 
 
@@ -16,29 +15,6 @@ public class AuthService
     {
         this.httpClient = httpClient;
         this.jsRuntime = jsRuntime;
-    }
-
-    public async Task<AuthResponse?> Login(LoginModel model)
-    {
-        try
-        {
-            var response = await httpClient.PostAsJsonAsync("http://localhost:5000/Auth/login", model);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                var authResponse = JsonSerializer.Deserialize<AuthResponse>(content);
-                return authResponse;
-            }
-            else
-            {
-                return null; // Login failed
-            }
-        }
-        catch
-        {
-            return null; // Error occurred during login
-        }
     }
 
     public void SetAuthorizationHeader(string token)

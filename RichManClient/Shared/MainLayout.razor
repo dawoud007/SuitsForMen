@@ -178,7 +178,7 @@
             private string errorMessage = string.Empty;
             private async Task LoginUser()
             {
-                var response = await Http.PostAsJsonAsync(sharedStateService.Api_Uri + "Auth/login", model);
+                var response = await Http.PostAsJsonAsync(sharedStateService.Api_Uri + "Shop/Login", model);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<AuthResponse>();

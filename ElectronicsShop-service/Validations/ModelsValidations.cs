@@ -26,6 +26,12 @@ namespace ElectronicsShop_service.Validations
         {
 
         }
+    }  public class ShopValidations : AbstractValidator<Shop>
+    {
+        public ShopValidations()
+        {
+
+        }
     }
 
 }

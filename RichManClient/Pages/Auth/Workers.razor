@@ -109,7 +109,7 @@
         try
         {
             
-            var response = await Http.PostAsJsonAsync(sharedStateService.Api_Uri + "Auth/AddWorkersToShop", workerName);
+            var response = await Http.PostAsJsonAsync(sharedStateService.Api_Uri + "Shop/AddWorkersToShop", workerName);
 
             if (response.IsSuccessStatusCode)
             {
@@ -134,7 +134,7 @@
             var token = await AuthService.GetAccessTokenAsync();
             Http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
-            workers = await Http.GetFromJsonAsync<List<Worker>>(sharedStateService.Api_Uri + "Auth/GetWorkersToShop");
+            workers = await Http.GetFromJsonAsync<List<Worker>>(sharedStateService.Api_Uri + "Shop/GetWorkersToShop");
         }
         catch (Exception ex)
         {
@@ -154,7 +154,7 @@
         }
 
         var workerToDelete = workers.FirstOrDefault(w => w.WorkerName == selectedWorker);
-        var response = await Http.DeleteAsync(sharedStateService.Api_Uri + "Auth/DeleteWorkersFromShop?workersToDelete=" + workerToDelete.WorkerName);
+        var response = await Http.DeleteAsync(sharedStateService.Api_Uri + "Shop/DeleteWorkersFromShop?workersToDelete=" + workerToDelete.WorkerName);
 
         if (response.IsSuccessStatusCode)
         {
