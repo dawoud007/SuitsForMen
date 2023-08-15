@@ -49,4 +49,16 @@ namespace ElectronicsShop_service.Models
 
 
     }
+    public class DeleteReason
+    {
+        public int id { get; set; }
+        public string ShopName { get; set; }
+        public string workerName { get; set; }
+
+        public int amount { get; set; }
+        public string DeleteReasonDetails { get; set; }
+        public DateTime DeleteData { get; set; } = DateTime.Now;
+    }
+
+
 }

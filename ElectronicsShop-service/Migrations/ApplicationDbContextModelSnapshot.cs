@@ -118,6 +118,37 @@ namespace ElectronicsShop_service.Migrations
                     b.ToTable("Clothes");
                 });
 
+            modelBuilder.Entity("ElectronicsShop_service.Models.DeleteReason", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
+
+                    b.Property<DateTime>("DeleteData")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeleteReasonDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ShopName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("amount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("workerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("DeleteReasons");
+                });
+
             modelBuilder.Entity("ElectronicsShop_service.Models.Money", b =>
                 {
                     b.Property<int>("id")
@@ -172,8 +203,8 @@ namespace ElectronicsShop_service.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("65780a9c-6cb9-4eea-bb06-2a1b47ff08f4"),
-                            CreationDate = new DateTime(2023, 8, 14, 12, 17, 18, 296, DateTimeKind.Local).AddTicks(876),
+                            Id = new Guid("4ec6657b-bbe8-4576-9848-bfb8c70aeea0"),
+                            CreationDate = new DateTime(2023, 8, 15, 17, 52, 28, 297, DateTimeKind.Local).AddTicks(8798),
                             Password = "Reda12@",
                             Role = "Admin",
                             UserName = "reda",

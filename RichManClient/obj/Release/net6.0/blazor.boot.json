@@ -32,6 +32,10 @@
       "Microsoft.Extensions.Logging.Abstractions.dll": "sha256-TeK78LW1mefI\/Ao7uFcK6TBhgjx9HUMSm3nqBsUC6pI=",
       "Microsoft.Extensions.Options.dll": "sha256-eGESyy9mRu8RcCGajAu4E8nxSmeB5nxiZkFPVaZ5Vl0=",
       "Microsoft.Extensions.Primitives.dll": "sha256-jOmoWSfsdQexH\/6QCA56gR1RMEqeix2iDDUBWbpAOQI=",
+      "Microsoft.IdentityModel.Abstractions.dll": "sha256-Z1OVPktvEkDuXjOmBCCqkgXCiOYvVeQ5gCdTh\/aoitA=",
+      "Microsoft.IdentityModel.JsonWebTokens.dll": "sha256-0E1\/5hlrJ6FggOzq3ETasHZ0\/CvusNXJ6w1VKljufMM=",
+      "Microsoft.IdentityModel.Logging.dll": "sha256-zRUBqjZCGzCFuOTldcUU1U0OdHKwCwBSMEWKrDOemtU=",
+      "Microsoft.IdentityModel.Tokens.dll": "sha256-i6AmuUrzxjMN8wJDTLjVlkW+A\/qKge6+0sLTdehXuuM=",
       "Microsoft.JSInterop.dll": "sha256-Ffoz4IWpnm2BxyaU8bXOfrYHejLk7LgWvUkxDRFmuNE=",
       "Microsoft.JSInterop.WebAssembly.dll": "sha256-oLlwenIUhav9jayjB4esgp4amlhHtXBDkV+t22IHcV8=",
       "Mono.Cecil.Mdb.dll": "sha256-XdZXAOEdip40YQRLDm+Cq77d3W\/JCvtTwrU3RLkoEjM=",
@@ -45,6 +49,7 @@
       "NuGet.Packaging.dll": "sha256-1rNiB\/Fg9TM48rYvp8I3zN6Kvp4AAobEIaKEoksk2nM=",
       "NuGet.Versioning.dll": "sha256-G1Yu7nermHXdB4wd75Xh7e\/X0bt5BdrkZbhonc8rWBc=",
       "Paket.Core.dll": "sha256-tXESd2UnwjQP1TyaX53e1UdXkcWgDMbH5Izo0JmOWQc=",
+      "System.IdentityModel.Tokens.Jwt.dll": "sha256-Y2OAvyagAbmjTnjVUPmlS5AgALc+HKpnG+utdWxtSZg=",
       "System.IO.Pipelines.dll": "sha256-6+E55JXedimdw1c1bDtVg4K7XuWjVWVTifH8QpfzXSY=",
       "System.Net.Http.WinHttpHandler.dll": "sha256-GI1vlG\/ia8t+Ee8L+W89z4S3Xsd\/giGLIK3n3tU1BxQ=",
       "System.Security.Cryptography.Pkcs.dll": "sha256-06AjwCB7MrAqzsPlVzuOs8F6LFxb9ZG7IzUQlSTcAbY=",
@@ -215,13 +220,13 @@
       "mscorlib.dll": "sha256-mvS0gmCEk3NPPJPuIX5UWyIRyNxQ4WYYES39CBT9CK0=",
       "netstandard.dll": "sha256-6NXprR7wyUZxpdXxaSPHSoC5uOL5UCc7bsZG3TSuVxE=",
       "System.Private.CoreLib.dll": "sha256-igtwZSR0\/lrbmwL\/XiTsEkIeSL+736GHTZPReYguZCQ=",
-      "RichManClient.dll": "sha256-seopIKvAy+rWzd3hYhHH8meNEVb7rGfT6Nmvu28H91E="
+      "RichManClient.dll": "sha256-iZpoOmxb5CrZlJz0toSLgTRZgoQzXOQy0iPks9VGzcw="
     },
     "extensions": null,
     "lazyAssembly": null,
     "libraryInitializers": null,
     "pdb": {
-      "RichManClient.pdb": "sha256-xoLJg1CIK6eeyslW\/qf+s+JNMZURNOu\/Ej5k7HJiDj0="
+      "RichManClient.pdb": "sha256-2Hr8y9o64NOZS7cG0qMT7D6Jp0C98e+p\/rPVXxeI2YA="
     },
     "runtime": {
       "dotnet.6.0.14.duijk1207n.js": "sha256-54cJ6JdGhGbKaLWxHfRYzYbuyRq2wlK\/ZDzfSXD3FEs=",

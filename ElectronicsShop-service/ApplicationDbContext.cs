@@ -11,6 +11,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Cloth>? Clothes { get; set; }
     public DbSet<Bill>? Bills { get; set; }
     public DbSet<Money>? Moneys{ get; set; }
+    public DbSet<DeleteReason>? DeleteReasons { get; set; }
 
     public DbSet<Worker>? ShopWorkers { get; set; }
     public DbSet<Shop>? Shops { get; set; }

@@ -1,41 +1,89 @@
 ﻿@inherits LayoutComponentBase
+@using System.IdentityModel.Tokens.Jwt
 @inject IAuthenticationService AuthenticationService
 
-<div class="page">
+
+<div class="page @sideTogglerClass @navTogglerClass">
     @if (AuthenticationService.IsLoggedIn)
     {
-        <!-- Display NavMenu and other navigation links for logged-in users -->
-        <div class="sidebar">
-            <NavMenu />
+
+        <div class="nav-bar mobile">
+            <button title="toggler" class="toggler side" @onclick="ToggleSide">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+
+            <div class="logo-container">
+                <a class="navbar-brand logo" href="">RichMan</a>
+            </div>
+
+            <button title="toggler" class="toggler nav" @onclick="ToggleNav">
+                <div></div>
+                <div></div>
+                <div></div>
+            </button>
+            <div class="top-row">
+                <div class="left-wrapper">
+                    <button @onclick="TogglePasswordInput" class="nav-btn">المخفي</button>
+                    @if (showPasswordInput)
+                    {
+                        <div class="password-input">
+                            <input type="password"
+                           @bind="enteredPassword"
+                           class="hidden-password"
+                           placeholder="ادخل كلمة المرور" />
+                            <button @onclick="CheckPasswordAndShowLink" class="nav-btn">دخول</button>
+                        </div>
+                    }
+                    @if (showHiddenLink)
+                    {
+                        <div class="hidden-btns">
+                            <button class="btn btn-primary" @onclick="GoToAddBillPage">احصائيات</button>
+                            <button class="btn btn-primary" @onclick="AddWorkers">اضافة عمال</button>
+                        </div>
+                    }
+                </div>
+
+                <div class="sign-btns">
+                    <a class="sign-btn" href="/logout">تسجيل خروج</a>
+                    <a class="sign-btn" href="/signup">اضافة محل</a>
+                </div>
+            </div>
         </div>
 
-        <main>
-            
-         
-            <div class="top-row px-4" style="display: flex; justify-content: left;">
+        @*<div class="top-row px-4" style="display: flex; justify-content: left;">
+            <a href="/logout" style="background-color: blue; color: white; padding: 5px; text-decoration: none; margin-right: 10px; border-radius: 5px;">@successMessage</a>
 
-            
-                <button @onclick="TogglePasswordInput" style="background-color: blue; color: white; padding: 5px; text-decoration: none; margin-right: 10px; border-radius: 5px;">المخفي</button>
-                @if (showPasswordInput)
-                {
-                    <div class="password-input">
-                        <input type="password" @bind="enteredPassword" style="margin-top:50px;"class="form-control" placeholder="Enter Password" />
-                        <button @onclick="CheckPasswordAndShowLink" style="left:30px;" class="login-button btn btn-primary">دخول</button>
-                    </div>
-                }
+            <button @onclick="TogglePasswordInput" style="background-color: blue; color: white; padding: 5px; text-decoration: none; margin-right: 10px; border-radius: 5px;">المخفي</button>
+            @if (showPasswordInput)
+            {
+                <div class="password-input">
+                    <input type="password" @bind="enteredPassword" style="margin-top:50px;" class="form-control" placeholder="Enter Password" />
+                    <button @onclick="CheckPasswordAndShowLink" style="left:30px;" class="login-button btn btn-primary">دخول</button>
+                </div>
+            }
 
-         
-                <a href="/logout" style="background-color: blue; color: white; padding: 5px; text-decoration: none; margin-right: 10px; border-radius: 5px;">تسجيل خروج</a>
-               
-                
-                <a href="/signup" style="background-color: red; color: white; padding: 5px; text-decoration: none; margin-left: 10px; border-radius: 5px;">اضافة محل </a>
-                @if (showHiddenLink)
-                {
-                    <button class="btn btn-primary" style="margin:10px;"@onclick="GoToAddBillPage">احصائيات</button>
-                    <button class="btn btn-primary" style="margin:10px;"@onclick="AddWorkers">اضافة عمال</button>
-                }
-                <!-- Other navigation links for logged-in users -->
-            </div>
+
+            <a href="/logout" style="background-color: blue; color: white; padding: 5px; text-decoration: none; margin-right: 10px; border-radius: 5px;">تسجيل خروج</a>
+
+
+            <a href="/signup" style="background-color: red; color: white; padding: 5px; text-decoration: none; margin-left: 10px; border-radius: 5px;">اضافة محل </a>
+            @if (showHiddenLink)
+            {
+                <button class="btn btn-primary" style="margin:10px;" @onclick="GoToAddBillPage">احصائيات</button>
+                <button class="btn btn-primary" style="margin:10px;" @onclick="AddWorkers">اضافة عمال</button>
+            }
+            <!-- Other navigation links for logged-in users -->
+        </div>*@
+
+        @*<div class="sidebar">*@
+        <NavMenu />
+        @*</div>*@
+
+        <main class="main-content" style="margin-top:3.5rem">
+
+          
                    
             <article class="content px-4">
                 @Body
@@ -187,8 +235,17 @@
                         // Save the JWT token in local storage
                         await JSRuntime.InvokeVoidAsync("localStorage.setItem", "accessToken", result.Token);
                         await AuthenticationService.Login(result.Token);
-                        // Display success message
-                        successMessage = "دخول";
+
+                        // Decode the JWT token to get claims
+                        var tokenHandler = new JwtSecurityTokenHandler();
+                        var jwtToken = tokenHandler.ReadJwtToken(result.Token);
+
+                        // Extract and display shopName claim
+                        if (jwtToken.Payload.TryGetValue("WhatToSee", out var shopNameClaim))
+                        {
+                            successMessage = $"Welcome to {shopNameClaim}";
+                        }
+
                         // Redirect to the dashboard or another authenticated page
                         NavigationManager.NavigateTo("/");
                     }
@@ -235,5 +292,23 @@
             showHiddenLink = true;
             showPasswordInput = false;
         }
+    }
+
+    private bool isNavOpen = false;
+
+    private string navTogglerClass => isNavOpen ? "nav-open" : "";
+
+    private void ToggleNav()
+    {
+        isNavOpen = !isNavOpen;
+    }
+
+    private bool isSideOpen = false;
+
+    private string sideTogglerClass => isSideOpen ? "side-open" : "";
+
+    private void ToggleSide()
+    {
+        isSideOpen = !isSideOpen;
     }
 }

@@ -30,12 +30,16 @@ namespace ElectronicsShop_service.Models
         public int Amount { get; set; }
         public string? ShopName { get; set; }
     }
+
     public class MoneyDeleteDto
     {
         public MoneyAccountType AccountType { get; set; }
         public int Amount { get; set; }
+        public string WorkerName { get; set; }
         public string? ShopName { get; set; }
+        public string DeleteReason { get; set; }
     }
+
     public enum MoneyAccountType
     {
         Box,

@@ -263,35 +263,8 @@ public class BillController : MyBaseController<Bill, BillDto>
                 Amount = bill.SellingPricee,
                 ShopName = whatToSeeValue
             };
-     
-        if (AddToSAve == null || AddToSAve.Amount<0)
-        {
-            return Ok("Invalid data");
-        }
 
-            // Use a separate DbContext instance within the method scope
-
-
-            var money = _dbContext.Moneys!.FirstOrDefault(m => m.ShopName == whatToSeeValue);
-            if (money == null)
-            {
-                money = new Money(); // Create a new Money instance with default values
-                money.ShopName = AddToSAve.ShopName;
-                _dbContext.Moneys!.Add(money); // Add it to the database context
-            }
-
-            if (AddToSAve.AccountType == MoneyAccountType.Box)
-            {
-                money.AddMoneyToBox(AddToSAve.Amount);
-            }
-            else if (AddToSAve.AccountType == MoneyAccountType.Visa)
-            {
-                money.AddMoneyToVisa(AddToSAve.Amount);
-
-                await _dbContext.SaveChangesAsync();
-
-
-            }
+            AddMoneyToAccount(AddToSAve);
 
             return Ok(bill);
 		}
@@ -432,7 +405,8 @@ public class BillController : MyBaseController<Bill, BillDto>
             if (money == null)
             {
                 money = new Money(); // Create a new Money instance with default values
-                money.ShopName = moneyUpdateDto.ShopName;
+                money.ShopName = whatToSeeValue;
+             
                 _dbContext.Moneys.Add(money); // Add it to the database context
             }
 
@@ -460,13 +434,14 @@ public class BillController : MyBaseController<Bill, BillDto>
 
     [Authorize(AuthenticationSchemes = "Bearer")]
     [HttpPost("delete-money")]
-    public async Task<IActionResult> DeleteMoneyFromAccount([FromBody] MoneyUpdateDto moneyUpdateDto)
+    public async Task<IActionResult> DeleteMoneyFromAccount([FromBody] MoneyDeleteDto moneyDeleteDto)
     {
-        if (moneyUpdateDto.Amount >= 0)
+        if (moneyDeleteDto.Amount >= 0)
         {
             var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+            moneyDeleteDto.ShopName=whatToSeeValue;
 
-            if (moneyUpdateDto == null)
+            if (moneyDeleteDto == null)
             {
                 return BadRequest("Invalid data");
             }
@@ -479,19 +454,28 @@ public class BillController : MyBaseController<Bill, BillDto>
                 return NotFound("Money data not found");
             }
 
-            if (moneyUpdateDto.AccountType == MoneyAccountType.Box)
+            if (moneyDeleteDto.AccountType == MoneyAccountType.Box)
             {
-                money.RemoveMoneyFromBox(moneyUpdateDto.Amount);
+                money.RemoveMoneyFromBox(moneyDeleteDto.Amount);
             }
-            else if (moneyUpdateDto.AccountType == MoneyAccountType.Visa)
+            else if (moneyDeleteDto.AccountType == MoneyAccountType.Visa)
             {
-                money.RemoveMoneyFromVisa(moneyUpdateDto.Amount);
+                money.RemoveMoneyFromVisa(moneyDeleteDto.Amount);
             }
             else
             {
                 return BadRequest("Invalid account type");
             }
 
+            DeleteReason deleteReason = new DeleteReason
+            {
+                amount=moneyDeleteDto.Amount,
+                workerName=moneyDeleteDto.WorkerName,
+                ShopName = whatToSeeValue!,
+                DeleteReasonDetails= moneyDeleteDto.DeleteReason
+
+            };
+            await _dbContext.DeleteReasons!.AddAsync(deleteReason);
             await _dbContext.SaveChangesAsync();
 
             return Ok("Money deleted successfully");
@@ -525,101 +509,22 @@ public class BillController : MyBaseController<Bill, BillDto>
     }
 
 
+    [Authorize(AuthenticationSchemes = "Bearer")]
+    [HttpGet]
+    public IActionResult GetAllDeleteResons()
+    {
+        var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
+        var deleteReasons = _dbContext.DeleteReasons!.Where(m => m.ShopName == whatToSeeValue).ToList(); // Adjust as needed
 
-
-    /*
-        [Authorize(AuthenticationSchemes = "Bearer")]
-        [HttpGet]
-        public async Task<IActionResult> GetStaticsBasedOnBill(PeriodType periodType)
+        if (deleteReasons == null)
         {
-            List<Cloth> suits = new();
-            var whatToSeeClaim = User.FindFirst("WhatToSee")?.Value;
-
-            var currentDate = DateTime.Now;
-
-            if (periodType == PeriodType.Month)
-            {
-                var firstDayOfMonth = currentDate.AddDays(1 - currentDate.Day).Date;
-                var lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
-
-                var monthlyStatistics = (await _billRepository.Get(c =>
-                    c.DateCreated >= firstDayOfMonth && c.DateCreated <= lastDayOfMonth && c.SellerName == whatToSeeClaim,
-                    null,
-                    "")).ToList();
-              foreach(var bill in monthlyStatistics)
-                {
-
-                    bill.Suits.ToList();
-                    suits.AddRange(bill.Suits); 
-                }
-
-                var groupedMonthlyStatistics = suits
-                    .GroupBy(cloth => new { cloth.Name, cloth.Color, cloth.Size })
-                    .Select(groupedCloth => new GroupedStatistics
-                    {
-                        Name = groupedCloth.Key.Name,
-                        Color = groupedCloth.Key.Color,
-                        Size = groupedCloth.Key.Size,
-                        TotalPieces = groupedCloth.Sum(cloth => cloth.NumOfPieces),
-                        TotalProfits =groupedCloth.Sum(cloth => cloth.NumOfPieces),
-                    })
-                    .ToList();
-
-                var mostSoldProduct = groupedMonthlyStatistics
-                    .OrderByDescending(stat => stat.TotalPieces)
-                    .FirstOrDefault();
-
-                if (mostSoldProduct != null)
-                {
-                    mostSoldProduct.Label = "Most Sold";
-                }
-
-                return Ok(new { Statistics = groupedMonthlyStatistics, MostSoldProduct = mostSoldProduct });
-            }
-            else if (periodType == PeriodType.Week)
-            {
-                var lastDayOfWeek = currentDate;
-                var firstDayOfWeek = currentDate.AddDays(-6);
-
-
-                var ProfitsInWeek = (await _billRepository.Get(c =>
-                  c.DateCreated >= firstDayOfWeek && c.DateCreated <= lastDayOfWeek && c.SellerName == whatToSeeClaim,
-                  null,
-                  "")).ToList().Sum(b => b.ProfitDifference);
-                var weeklyStatistics = (await _clothRepository.Get(c =>
-                    c.DateCreated >= firstDayOfWeek && c.DateCreated <= lastDayOfWeek && c.BillId != null && c.StoreName == whatToSeeClaim,
-                    null,
-                    ""))
-                    .ToList();
-
-                var groupedWeeklyStatistics = weeklyStatistics
-                    .GroupBy(cloth => new { cloth.Name, cloth.Color, cloth.Size })
-                    .Select(groupedCloth => new GroupedStatistics
-                    {
-                        Name = groupedCloth.Key.Name,
-                        Color = groupedCloth.Key.Color,
-                        Size = groupedCloth.Key.Size,
-                        TotalPieces = groupedCloth.Sum(cloth => cloth.NumOfPieces),
-                        TotalProfits = ProfitsInWeek
-                    })
-                    .ToList();
-
-                var mostSoldProduct = groupedWeeklyStatistics
-                    .OrderByDescending(stat => stat.TotalPieces)
-                    .FirstOrDefault();
-
-                if (mostSoldProduct != null)
-                {
-                    mostSoldProduct.Label = "Most Sold";
-                }
-
-                return Ok(new { Statistics = groupedWeeklyStatistics, MostSoldProduct = mostSoldProduct });
-            }
-
-            return BadRequest("Invalid period type.");
+            return NotFound("Money data not found");
         }
-    */
 
+       
+
+        return Ok(deleteReasons);
+    }
 
 
 
@@ -711,6 +616,15 @@ public class MoneyUpdateDto
     public int Amount { get; set; }
     public string? ShopName { get; set; }
 }
+public class MoneyDeleteDto
+{
+    public MoneyAccountType AccountType { get; set; }
+    public int Amount { get; set; }
+    public string WorkerName { get; set; }
+    public string? ShopName { get; set; }
+    public string DeleteReason { get; set; }
+}
+
 
 public enum MoneyAccountType
 {

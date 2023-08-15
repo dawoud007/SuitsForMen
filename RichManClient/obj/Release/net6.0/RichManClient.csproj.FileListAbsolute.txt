@@ -39,6 +39,10 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\ww
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.Extensions.Logging.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.Extensions.Options.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.Extensions.Primitives.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.IdentityModel.Logging.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.JSInterop.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.JSInterop.WebAssembly.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.VisualBasic.Core.dll
@@ -100,6 +104,7 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\ww
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Globalization.Calendars.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Globalization.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Globalization.Extensions.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.IO.Compression.Brotli.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.IO.Compression.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.IO.Compression.FileSystem.dll
@@ -232,6 +237,7 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\ww
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\zh-Hans\FSharp.Core.resources.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\zh-Hant\FSharp.Core.resources.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Threading.Tasks.Dataflow.dll.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.IdentityModel.Tokens.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.ValueTuple.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.JSInterop.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Threading.Tasks.Parallel.dll.gz
@@ -281,6 +287,7 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\ww
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Net.WebSockets.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.AspNetCore.Components.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.Win32.Primitives.dll.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.IdentityModel.JsonWebTokens.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Diagnostics.DiagnosticSource.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Runtime.Serialization.Primitives.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Diagnostics.Tracing.dll.gz
@@ -341,6 +348,7 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\ww
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Chessie.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Runtime.Extensions.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Numerics.dll.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.IdentityModel.Logging.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Resources.ResourceManager.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Net.Primitives.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Runtime.Loader.dll.gz
@@ -397,11 +405,13 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\ww
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Net.NetworkInformation.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Threading.ThreadPool.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.Extensions.Logging.Abstractions.dll.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.IdentityModel.Abstractions.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Security.Cryptography.Primitives.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.Extensions.DependencyInjection.Abstractions.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.AppContext.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Diagnostics.Debug.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Forms.dll.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.IdentityModel.Tokens.Jwt.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\Microsoft.AspNetCore.Components.WebAssembly.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Web.Http.dll.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\wwwroot\_framework\System.Net.Http.Formatting.dll.gz
@@ -491,6 +501,10 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Mi
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Microsoft.Extensions.Options.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Microsoft.Extensions.Primitives.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Microsoft.IdentityModel.Abstractions.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Microsoft.IdentityModel.JsonWebTokens.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Microsoft.IdentityModel.Logging.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Microsoft.JSInterop.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Microsoft.JSInterop.WebAssembly.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Mono.Cecil.Mdb.dll
@@ -504,6 +518,7 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Nu
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\NuGet.Packaging.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\NuGet.Versioning.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\Paket.Core.dll
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\System.IdentityModel.Tokens.Jwt.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\System.IO.Pipelines.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\System.Net.Http.WinHttpHandler.dll
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\bin\Release\net6.0\System.Security.Cryptography.Pkcs.dll
@@ -726,6 +741,10 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\bu
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\saoievNO.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\CXeOdo4z.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\UMnoWH67.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\SbnwHfGW.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\cAAhqsVq.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\l3uObsu+.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\+VYC3BrT.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\018K5Uk4.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\8dj8LvXl.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\eiFZDKIn.gz
@@ -739,6 +758,7 @@ C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\bu
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\I5kWaU4x.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\Uny69QZN.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\Lrz2MxMS.gz
+C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\SsJtzj+u.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\FqJQ2Zrq.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\VvSrt3nq.gz
 C:\Users\Mo Dawoud\Desktop\suits\SuitsForMen\RichManClient\obj\Release\net6.0\build-gz\2j2pNGuN.gz

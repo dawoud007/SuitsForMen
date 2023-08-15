@@ -116,7 +116,7 @@ public class ClothController : MyBaseController<Cloth, ClothDto>
     public async Task<IActionResult> Search([FromBody] ClothSearchDto searchDto)
     {
         var whatToSeeValue = User.FindFirst("WhatToSee")?.Value;
-        searchDto.WhatToSee = whatToSeeValue;
+  
         var result = await _clothRepository.GetFiltered(searchDto);
         if(result.Count==0)
         {
@@ -132,7 +132,7 @@ public class ClothController : MyBaseController<Cloth, ClothDto>
         public int? Size { get; set; }
         public string? Color { get; set; }
         public string? Make { get; set; }
-        public string? WhatToSee { get; set; }
+ 
     }
 
 }
