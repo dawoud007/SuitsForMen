@@ -1,3 +1,2 @@
 # RichMan
 RichMan
-hello world
